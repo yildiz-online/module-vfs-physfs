@@ -26,6 +26,7 @@
 
 #include <physfs.h>
 #include <string>
+#include <runtime_error>
 #include "File.hpp"
 #include "FileEditable.hpp"
 
@@ -42,7 +43,7 @@ public:
 
     Container(const std::string& path) {
         if (!PHYSFS_mount(path.c_str(), NULL, 1)) {
-            throw std::exception(PHYSFS_getLastError());
+            throw std::runtime_error(PHYSFS_getLastError());
         }
     }
 

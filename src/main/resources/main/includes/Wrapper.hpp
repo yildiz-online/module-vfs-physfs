@@ -27,6 +27,7 @@
 #include <physfs.h>
 #include <string>
 #include <vector>
+#include <runtime_error>
 #include "Container.hpp"
 
 namespace yz {
@@ -40,7 +41,7 @@ public:
     Wrapper() {
         if(!PHYSFS_isInit) {
             if (!PHYSFS_init(argv0)) {
-                  throw std::exception(PHYSFS_getLastError());
+                  throw std::runtime_error(PHYSFS_getLastError());
             }
         }
     }
@@ -61,7 +62,7 @@ public:
     void close() {
         if(PHYSFS_isInit) {
             if (!PHYSFS_deinit()) {
-                throw std::exception(PHYSFS_getLastError());
+                throw std::runtime_error(PHYSFS_getLastError());
             }
         }
     }

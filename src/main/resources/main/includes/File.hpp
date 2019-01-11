@@ -26,6 +26,7 @@
 
 #include <physfs.h>
 #include <string>
+#include <runtime_error>
 
 namespace yz {
 
@@ -39,7 +40,7 @@ public:
         this->fileName = path;
         this->file = PHYSFS_openRead(path.c_str());
         if(!file) {
-            throw std::exception(PHYSFS_getLastError());
+            throw std::runtime_error(PHYSFS_getLastError());
         }
     }
 
@@ -49,7 +50,7 @@ public:
 
     void close() {
         if(!PHYSFS_close(this->file)) {
-            throw std::exception(PHYSFS_getLastError());
+            throw std::runtime_error(PHYSFS_getLastError());
         }
     }
 
