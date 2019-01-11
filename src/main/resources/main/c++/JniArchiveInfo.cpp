@@ -22,20 +22,20 @@
  */
 
 #include "../includes/JniArchiveInfo.h"
-#include "../includes/ArchiveInfo.hpp"
+#include "../includes/ArchiveTypeInfo.hpp"
 
 /**
 * @author Grégory Van den Borre
 */
 
 JNIEXPORT jstring JNICALL Java_jni_PhysFsArchiveInfoNative_getExtension(JNIEnv* env, jobject o, jlong pointer) {
-    yz::physfs::ArchiveInfo* info = reinterpret_cast<yz::physfs::ArchiveInfo*>(pointer);
+    yz::physfs::ArchiveTypeInfo* info = reinterpret_cast<yz::physfs::ArchiveTypeInfo*>(pointer);
     const std::string extension = info->getExtension();
     return env->NewStringUTF(extension.c_str());
 }
 
 JNIEXPORT jstring JNICALL Java_jni_PhysFsArchiveInfoNative_getDescription(JNIEnv* env, jobject o, jlong pointer) {
-    yz::physfs::ArchiveInfo* info = reinterpret_cast<yz::physfs::ArchiveInfo*>(pointer);
+    yz::physfs::ArchiveTypeInfo* info = reinterpret_cast<yz::physfs::ArchiveTypeInfo*>(pointer);
     const std::string description = info->getDescription();
     return env->NewStringUTF(description.c_str());
 }

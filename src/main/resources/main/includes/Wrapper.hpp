@@ -29,6 +29,7 @@
 #include <vector>
 #include <stdexcept>
 #include "Container.hpp"
+#include "ArchiveTypeInfo.hpp"
 
 namespace yz {
 
@@ -46,11 +47,11 @@ public:
         }
     }
 
-    std::vector<yz::physfs::ArchiveInfo*> getSupportedArchiveType() const {
+    std::vector<yz::physfs::ArchiveTypeInfo*> getSupportedArchiveType() const {
         const PHYSFS_ArchiveInfo** supported =  PHYSFS_supportedArchiveTypes();
-        std::vector<yz::physfs::ArchiveInfo*> list;
+        std::vector<yz::physfs::ArchiveTypeInfo*> list;
         for (; *supported != 0; ++supported) {
-            list.push_back(new yz::physfs::ArchiveInfo(*supported));
+            list.push_back(new yz::physfs::ArchiveTypeInfo(*supported));
         }
         return list;
     }

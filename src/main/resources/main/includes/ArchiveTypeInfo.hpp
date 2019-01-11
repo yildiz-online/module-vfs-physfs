@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  */
 
-#ifndef YZ_PHYSFS_ARCHIVEINFO_H
-#define YZ_PHYSFS_ARCHIVEINFO_H
+#ifndef YZ_PHYSFS_ARCHIVETYPEINFO_H
+#define YZ_PHYSFS_ARCHIVETYPEINFO_H
 
 #include <physfs.h>
 #include <string>
@@ -31,11 +31,11 @@ namespace yz {
 
 namespace physfs {
 
-class ArchiveInfo {
+class ArchiveTypeInfo {
 
 public:
 
-    ArchiveInfo(const PHYSFS_ArchiveInfo* info) {
+    ArchiveTypeInfo(const PHYSFS_ArchiveInfo* info) {
         this->info = info;
     }
 

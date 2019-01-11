@@ -41,7 +41,7 @@ JNIEXPORT jlong JNICALL Java_jni_PhysFsWrapperNative_registerContainer(JNIEnv* e
     try {
         yz::physfs::Wrapper* wrapper = reinterpret_cast<yz::physfs::Wrapper*>(pointer);
         const char* path = env->GetStringUTFChars(jpath, 0);
-        yz::physfs::Container* = wrapper->registerContainer(path);
+        yz::physfs::Container* container = wrapper->registerContainer(path);
         env->ReleaseStringUTFChars(jpath, path);
         return reinterpret_cast<jlong>(container);
     } catch (std::exception& e) {
@@ -54,9 +54,9 @@ JNIEXPORT jlongArray JNICALL Java_jni_PhysFsWrapperNative_getSupportedArchiveTyp
     try {
         yz::physfs::Wrapper* wrapper = reinterpret_cast<yz::physfs::Wrapper*>(pointer);
         std::vector<yz::physfs::ArchiveInfo*> list = wrapper->getSupportedArchiveType();
-        const int size = list.size();
+        unsigned int size = list.size();
         jlongArray result = env->NewLongArray(size);
-        env->SetLongArrayRegion(result, 0, size, &list[0]);
+        env->SetLongArrayRegion(result, 0, size, &list);
         return result;
     } catch (std::exception& e) {
 
