@@ -30,14 +30,14 @@
 
 namespace yz {
 
-namespace file {
+namespace physfs {
 
 class FileEditable {
 
 public:
 
     FileEditable(const std::string& path) {
-        this->file = PHYSFS_openWriteByte(path.c_str());
+        this->file = PHYSFS_openWrite(path.c_str());
         ErrorHandler.check();
     }
 
