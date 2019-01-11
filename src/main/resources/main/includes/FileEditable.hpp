@@ -26,7 +26,7 @@
 
 #include <physfs.h>
 #include <string>
-#include <runtime_error>
+#include <stdexcept>
 
 namespace yz {
 
