@@ -46,7 +46,7 @@ private:
 
     PHYSFS_file* file;
 
-}
+};
 }
 }
 
