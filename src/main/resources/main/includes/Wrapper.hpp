@@ -41,7 +41,7 @@ public:
 
     Wrapper() {
         if(!PHYSFS_isInit) {
-            if (!PHYSFS_init(argv0)) {
+            if (!PHYSFS_init(NULL)) {
                   throw std::runtime_error(PHYSFS_getLastError());
             }
         }
