@@ -31,11 +31,11 @@
 JNIEXPORT jstring JNICALL Java_jni_PhysFsArchiveInfoNative_getExtension(JNIEnv* env, jobject o, jlong pointer) {
     yz::physfs::ArchiveInfo* info = reinterpret_cast<yz::physfs::ArchiveInfo*>(pointer);
     const std::string extension = info->getExtension();
-    return env->NewStringUTF(env, extension.c_str());
+    return env->NewStringUTF(extension.c_str());
 }
 
 JNIEXPORT jstring JNICALL Java_jni_PhysFsArchiveInfoNative_getDescription(JNIEnv* env, jobject o, jlong pointer) {
     yz::physfs::ArchiveInfo* info = reinterpret_cast<yz::physfs::ArchiveInfo*>(pointer);
     const std::string description = info->getDescription();
-    return env->NewStringUTF(env, description.c_str());
+    return env->NewStringUTF(description.c_str());
 }

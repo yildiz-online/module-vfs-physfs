@@ -58,7 +58,7 @@ private:
 
     const PHYSFS_ArchiveInfo* info;
 
-}
+};
 }
 }
 
