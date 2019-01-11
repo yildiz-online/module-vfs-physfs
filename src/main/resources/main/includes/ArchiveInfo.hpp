@@ -39,19 +39,19 @@ public:
         this->info = info;
     }
 
-    std::string& getExtension() const {
-        return std::string(this.info->extension);
+    std::string getExtension() const {
+        return std::string(this->info->extension);
     }
 
-    std::string& getDescription() const {
+    std::string getDescription() const {
         return std::string(this->info->description);
     }
 
-    std::string& getAuthor() const {
+    std::string getAuthor() const {
         return std::string(this->info->author);
     }
 
-    std::string& getUrl() const {
+    std::string getUrl() const {
         return std::string(this->info->url);
     }
 private:
