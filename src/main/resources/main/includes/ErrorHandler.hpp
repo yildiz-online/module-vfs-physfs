@@ -41,7 +41,7 @@ public:
 
    static void check() {
        PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
-       if(code != PHYSFS_ErrorCode.PHYSFS_ERR_OK ) {
+       if(code != PHYSFS_ErrorCode::PHYSFS_ERR_OK ) {
            throw std::exception(PHYSFS_getErrorByCode(code));
        }
    }
