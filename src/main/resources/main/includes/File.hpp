@@ -48,8 +48,9 @@ public:
     }
 
     void close() {
-        PHYSFS_close(this->file);
-        ErrorHandler::check();
+        if(!PHYSFS_close(this->file)) {
+            throw std::exception(PHYSFS_getLastError());
+        }
     }
 
 
