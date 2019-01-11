@@ -43,8 +43,7 @@ public:
 
     Container(const std::string& path) {
         PHYSFS_mount(path.c_str(), NULL, 1);
-        ErrorHandler.check();
-        this->path = path;
+        ErrorHandler::check();
     }
 
     File* openFile(const std::string& file) const {
@@ -54,10 +53,6 @@ public:
     FileEditable* openFileToWrite(const std::string& file) const {
         return new FileEditable(file);
     }
-
-
-private:
-    const std::string& path;
 
 };
 }

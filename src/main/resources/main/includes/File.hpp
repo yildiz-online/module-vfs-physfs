@@ -39,7 +39,7 @@ public:
     File(const std::string& path) {
         this->fileName = path;
         this->file = PHYSFS_openRead(path.c_str());
-        ErrorHandler.check();
+        ErrorHandler::check();
     }
 
     long getSize() const {
@@ -48,7 +48,7 @@ public:
 
     void close() {
         PHYSFS_close(this->file);
-        ErrorHandler.check();
+        ErrorHandler::check();
     }
 
 

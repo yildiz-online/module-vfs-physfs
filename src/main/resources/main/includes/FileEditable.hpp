@@ -38,7 +38,7 @@ public:
 
     FileEditable(const std::string& path) {
         this->file = PHYSFS_openWrite(path.c_str());
-        ErrorHandler.check();
+        ErrorHandler::check();
     }
 
 

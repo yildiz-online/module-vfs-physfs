@@ -61,5 +61,5 @@ JNIEXPORT jlongArray JNICALL Java_jni_PhysFsWrapperNative_getSupportedArchiveTyp
     } catch (std::exception& e) {
 
     }
-    return -1L;
+    return env->NewLongArray(0);
 }

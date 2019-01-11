@@ -42,7 +42,7 @@ public:
         if(!PHYSFS_isInit) {
             PHYSFS_init(NULL);
         }
-        ErrorHandler.check();
+        ErrorHandler::check();
     }
 
     std::vector<yz::physfs::ArchiveInfo*> getSupportedArchiveType() const {
@@ -62,7 +62,7 @@ public:
         if(PHYSFS_isInit) {
             PHYSFS_deinit();
         }
-        ErrorHandler.check();
+        ErrorHandler::check();
     }
 };
 }
