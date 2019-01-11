@@ -26,7 +26,6 @@
 
 #include <physfs.h>
 #include <string>
-#include "ErrorHandler.hpp"
 
 namespace yz {
 
@@ -38,7 +37,9 @@ public:
 
     FileEditable(const std::string& path) {
         this->file = PHYSFS_openWrite(path.c_str());
-        ErrorHandler::check();
+        if (!file) {
+            throw std::exception(PHYSFS_getLastError());
+        }
     }
 
 

@@ -26,7 +26,6 @@
 
 #include <physfs.h>
 #include <string>
-#include "ErrorHandler.hpp"
 
 namespace yz {
 
@@ -39,7 +38,9 @@ public:
     File(const std::string& path) {
         this->fileName = path;
         this->file = PHYSFS_openRead(path.c_str());
-        ErrorHandler::check();
+        if(!file) {
+            throw std::exception(PHYSFS_getLastError());
+        }
     }
 
     long getSize() const {

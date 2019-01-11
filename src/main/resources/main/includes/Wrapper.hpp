@@ -27,7 +27,6 @@
 #include <physfs.h>
 #include <string>
 #include <vector>
-#include "ErrorHandler.hpp"
 #include "Container.hpp"
 
 namespace yz {
@@ -40,9 +39,10 @@ public:
 
     Wrapper() {
         if(!PHYSFS_isInit) {
-            PHYSFS_init(NULL);
+            if (!PHYSFS_init(argv0)) {
+                  throw std::exception(PHYSFS_getLastError());
+            }
         }
-        ErrorHandler::check();
     }
 
     std::vector<yz::physfs::ArchiveInfo*> getSupportedArchiveType() const {
@@ -60,9 +60,10 @@ public:
 
     void close() {
         if(PHYSFS_isInit) {
-            PHYSFS_deinit();
+            if (!PHYSFS_deinit()) {
+                throw std::exception(PHYSFS_getLastError());
+            }
         }
-        ErrorHandler::check();
     }
 };
 }

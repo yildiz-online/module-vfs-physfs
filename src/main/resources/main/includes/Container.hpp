@@ -26,7 +26,6 @@
 
 #include <physfs.h>
 #include <string>
-#include "ErrorHandler.hpp"
 #include "File.hpp"
 #include "FileEditable.hpp"
 
@@ -42,8 +41,9 @@ public:
 //https://icculus.org/physfs/physfstut.tx
 
     Container(const std::string& path) {
-        PHYSFS_mount(path.c_str(), NULL, 1);
-        ErrorHandler::check();
+        if (!PHYSFS_mount(path.c_str(), NULL, 1)) {
+            throw std::exception(PHYSFS_getLastError());
+        }
     }
 
     File* openFile(const std::string& file) const {
