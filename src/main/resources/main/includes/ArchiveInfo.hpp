@@ -24,6 +24,9 @@
 #ifndef YZ_PHYSFS_ARCHIVEINFO_H
 #define YZ_PHYSFS_ARCHIVEINFO_H
 
+#include <physfs.h>
+#include <string>
+
 namespace yz {
 
 namespace physfs {
@@ -32,28 +35,28 @@ class ArchiveInfo {
 
 public:
 
-    ArchiveInfo(PHYSFS_ArchiveInfo* info) {
+    ArchiveInfo(const PHYSFS_ArchiveInfo* info) {
         this->info = info;
     }
 
-    string& getExtension() const {
+    std::string& getExtension() const {
         return std::string(this.info->extension);
     }
 
-    string& getDescription() const {
+    std::string& getDescription() const {
         return std::string(this->info->description);
     }
 
-    string& getAuthor() const {
+    std::string& getAuthor() const {
         return std::string(this->info->author);
     }
 
-    string& getUrl() const {
+    std::string& getUrl() const {
         return std::string(this->info->url);
     }
 private:
 
-    PHYSFS_ArchiveInfo* info;
+    const PHYSFS_ArchiveInfo* info;
 
 }
 }
