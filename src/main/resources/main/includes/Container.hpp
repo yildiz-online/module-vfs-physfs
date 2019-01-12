@@ -42,8 +42,9 @@ public:
 //https://icculus.org/physfs/physfstut.tx
 
     Container(const std::string& path) {
+    std::cout << "Creating container for: " << path << std::endl;
         if (!PHYSFS_mount(path.c_str(), NULL, 1)) {
-            throw std::runtime_error(PHYSFS_getLastError());
+        std::cout << "Failed to create container." << std::endl;
         }
     }
 
