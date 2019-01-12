@@ -35,7 +35,6 @@ import jni.PhysFsWrapperNative;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,6 +56,10 @@ public class PhysFsWrapper implements Vfs {
         loader.loadLibrary("libphysfs", "libyildizphysfs");
         this.pointer = NativePointer.create(PhysFsWrapperNative.initialize());
         this.logger.info("PhysFs vfs component initialized.");
+    }
+
+    public static Vfs create() {
+        return create(NativeResourceLoader.inJar());
     }
 
     public static Vfs create(final NativeResourceLoader loader) {
