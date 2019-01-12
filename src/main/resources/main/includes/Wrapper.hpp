@@ -46,7 +46,8 @@ public:
             if (!PHYSFS_init(NULL)) {
                 std::cout << "------------Physfs initialized.----------" << std::endl;
             } else {
-                std::cout << PHYSFS_getLastError() << std::endl;
+                PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
+                std::cout << PHYSFS_getErrorByCode(code) << std::endl;
                 std::cout << "Physfs initialization failure." << std::endl;
             }
         } else {
@@ -71,7 +72,8 @@ public:
     void close() {
         if(PHYSFS_isInit) {
             if (!PHYSFS_deinit()) {
-                throw std::runtime_error(PHYSFS_getLastError());
+                PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
+                throw std::runtime_error(PHYSFS_getErrorByCode(code));
             }
         }
     }

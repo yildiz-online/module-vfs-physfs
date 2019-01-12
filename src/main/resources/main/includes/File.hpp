@@ -39,7 +39,8 @@ public:
     File(const std::string& path) {
         this->file = PHYSFS_openRead(path.c_str());
         if(!file) {
-            throw std::runtime_error(PHYSFS_getLastError());
+            PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
+            throw std::runtime_error(PHYSFS_getErrorByCode(code));
         }
     }
 
@@ -49,7 +50,8 @@ public:
 
     void close() {
         if(!PHYSFS_close(this->file)) {
-            throw std::runtime_error(PHYSFS_getLastError());
+            PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
+            throw std::runtime_error(PHYSFS_getErrorByCode(code));
         }
     }
 

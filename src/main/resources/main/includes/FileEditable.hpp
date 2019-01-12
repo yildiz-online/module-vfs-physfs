@@ -39,7 +39,8 @@ public:
     FileEditable(const std::string& path) {
         this->file = PHYSFS_openWrite(path.c_str());
         if (!file) {
-            throw std::runtime_error(PHYSFS_getLastError());
+            PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
+            throw std::runtime_error(PHYSFS_getErrorByCode(code));
         }
     }
 
