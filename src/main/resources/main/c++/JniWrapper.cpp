@@ -56,7 +56,7 @@ JNIEXPORT jlongArray JNICALL Java_jni_PhysFsWrapperNative_getSupportedArchiveTyp
         std::vector<yz::physfs::ArchiveTypeInfo*> list = wrapper->getSupportedArchiveType();
         unsigned int size = list.size();
         jlongArray result = env->NewLongArray(size);
-        env->SetLongArrayRegion(result, 0, size, &list);
+        env->SetLongArrayRegion(result, 0, size, &list[0]);
         return result;
     } catch (std::exception& e) {
 
