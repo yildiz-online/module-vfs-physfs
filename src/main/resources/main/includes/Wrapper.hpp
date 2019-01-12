@@ -40,9 +40,13 @@ class Wrapper {
 public:
 
     Wrapper() {
+    std::cout << "Initializing physfs." << std::endl;
         if(!PHYSFS_isInit) {
             if (!PHYSFS_init(NULL)) {
+            std::cout << "Physfs initialized." << std::endl;
                   throw std::runtime_error(PHYSFS_getLastError());
+            } else {
+                std::cout << "Physfs initialization failure." << std::endl;
             }
         }
     }
