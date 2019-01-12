@@ -42,13 +42,15 @@ public:
 
     Wrapper() {
         if(!PHYSFS_isInit) {
-        std::cout << "----------Initializing physfs.-----------" << std::endl;
+            std::cout << "----------Initializing physfs.-----------" << std::endl;
             if (!PHYSFS_init(NULL)) {
-            std::cout << "------------Physfs initialized.----------" << std::endl;
+                std::cout << "------------Physfs initialized.----------" << std::endl;
             } else {
-            std::cout << PHYSFS_getLastError() << std::endl;
+                std::cout << PHYSFS_getLastError() << std::endl;
                 std::cout << "Physfs initialization failure." << std::endl;
             }
+        } else {
+            std::cout << "----------Physfs already initialized.-----------" << std::endl;
         }
     }
 
@@ -62,6 +64,7 @@ public:
     }
 
     Container* registerContainer(const std::string& path) const{
+        std::cout << "Registering container " << path << std::endl;
         return new Container(path);
     }
 
