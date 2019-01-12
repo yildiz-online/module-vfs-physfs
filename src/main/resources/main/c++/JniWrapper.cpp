@@ -57,7 +57,7 @@ JNIEXPORT jlongArray JNICALL Java_jni_PhysFsWrapperNative_getSupportedArchiveTyp
         const int size = list.size();
         jlong* buf = new jlong[size];
         for (int i = 0; i < size; i++) {
-            buf[i] = reinterpret_cast<jlong>(list.get(i));
+            buf[i] = reinterpret_cast<jlong>(list.at(i));
         }
         jlongArray result = env->NewLongArray(size);
         env->SetLongArrayRegion(result, 0, size, buf);
