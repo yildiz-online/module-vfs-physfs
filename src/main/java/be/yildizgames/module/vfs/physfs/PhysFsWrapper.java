@@ -54,7 +54,7 @@ public class PhysFsWrapper implements Vfs {
         super();
         this.logger.info("Initializing PhysFs vfs component...");
         loader.loadBaseLibrary();
-        loader.loadLibrary("libphysfs");
+        loader.loadLibrary("libphysfs", "yildizphysfs");
         this.pointer = NativePointer.create(PhysFsWrapperNative.initialize());
         this.logger.info("PhysFs vfs component initialized.");
     }
