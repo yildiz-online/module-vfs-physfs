@@ -43,6 +43,8 @@ public:
 
     Container(const std::string& path) {
     std::cout << "Creating container for: " << path << std::endl;
+    std::cout << "Check settings " << std::endl;
+    std::cout << PHYSFS_isInit() << std::endl;
         if (!PHYSFS_mount(path.c_str(), NULL, 1)) {
         std::cout << "Failed to create container." << std::endl;
         }
