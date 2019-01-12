@@ -42,8 +42,9 @@ JNIEXPORT jlong JNICALL Java_jni_PhysFsWrapperNative_registerContainer(JNIEnv* e
     try {
         yz::physfs::Wrapper* wrapper = reinterpret_cast<yz::physfs::Wrapper*>(pointer);
         JniStringWrapper path = JniStringWrapper(env, jpath);
-        yz::physfs::Container* container = wrapper->registerContainer(path.getValue());
-        return reinterpret_cast<jlong>(container);
+        return -1L;
+        //yz::physfs::Container* container = wrapper->registerContainer(path.getValue());
+        //return reinterpret_cast<jlong>(container);
     } catch (std::exception& e) {
         throwException(env, e.what());
     }
