@@ -23,6 +23,7 @@
 
 #include "../includes/JniWrapper.h"
 #include "../includes/Wrapper.hpp"
+#include "../includes/JniUtil.h"
 
 /**
 * @author Grégory Van den Borre
@@ -32,7 +33,7 @@ JNIEXPORT jlong JNICALL Java_jni_PhysFsWrapperNative_initialize(JNIEnv* env, job
     try {
         return reinterpret_cast<jlong>(new yz::physfs::Wrapper());
     } catch (std::exception& e) {
-
+        throwException(env, e.what());
     }
     return -1L;
 }
@@ -40,12 +41,11 @@ JNIEXPORT jlong JNICALL Java_jni_PhysFsWrapperNative_initialize(JNIEnv* env, job
 JNIEXPORT jlong JNICALL Java_jni_PhysFsWrapperNative_registerContainer(JNIEnv* env, jobject o, jlong pointer, jstring jpath) {
     try {
         yz::physfs::Wrapper* wrapper = reinterpret_cast<yz::physfs::Wrapper*>(pointer);
-        const char* path = env->GetStringUTFChars(jpath, 0);
-        yz::physfs::Container* container = wrapper->registerContainer(path);
-        env->ReleaseStringUTFChars(jpath, path);
+        JniStringWrapper path = JniStringWrapper(env, jpath);
+        yz::physfs::Container* container = wrapper->registerContainer(path.getValue());
         return reinterpret_cast<jlong>(container);
     } catch (std::exception& e) {
-
+        throwException(env, e.what());
     }
     return -1L;
 }
@@ -63,7 +63,7 @@ JNIEXPORT jlongArray JNICALL Java_jni_PhysFsWrapperNative_getSupportedArchiveTyp
         env->SetLongArrayRegion(result, 0, size, buf);
         return result;
     } catch (std::exception& e) {
-
+        throwException(env, e.what());
     }
     return env->NewLongArray(0);
 }
