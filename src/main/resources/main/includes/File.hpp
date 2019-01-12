@@ -37,7 +37,6 @@ class File {
 public:
 
     File(const std::string& path) {
-        this->fileName = path;
         this->file = PHYSFS_openRead(path.c_str());
         if(!file) {
             throw std::runtime_error(PHYSFS_getLastError());
@@ -56,8 +55,6 @@ public:
 
 
 private:
-
-    const std::string& fileName;
 
     PHYSFS_file* file;
 
