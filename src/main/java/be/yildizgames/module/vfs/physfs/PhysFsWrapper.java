@@ -27,6 +27,7 @@
 package be.yildizgames.module.vfs.physfs;
 
 import be.yildizgames.common.jni.NativePointer;
+import be.yildizgames.common.libloader.GlobalNativeResourceLoader;
 import be.yildizgames.common.libloader.NativeResourceLoader;
 import be.yildizgames.module.vfs.Vfs;
 import be.yildizgames.module.vfs.VfsArchiveInfo;
@@ -59,7 +60,7 @@ public class PhysFsWrapper implements Vfs {
     }
 
     public static Vfs create() {
-        return create(NativeResourceLoader.inJar());
+        return create(GlobalNativeResourceLoader.getInstance().getLoader());
     }
 
     public static Vfs create(final NativeResourceLoader loader) {
