@@ -26,6 +26,7 @@
 
 #include <physfs.h>
 #include <string>
+#include <iostream>
 #include <vector>
 #include <stdexcept>
 #include "Container.hpp"
