@@ -26,6 +26,8 @@
 
 package be.yildizgames.module.vfs;
 
+import java.util.List;
+
 /**
  * A VFS (virtual file system) provide a layer of abstraction on top on a file system, or an archive file.
  * @author Grégory Van den Borre
@@ -33,4 +35,6 @@ package be.yildizgames.module.vfs;
 public interface Vfs {
 
     VfsContainer registerContainer(String path);
+
+    List<VfsArchiveInfo> getSupportedArchiveInfo();
 }

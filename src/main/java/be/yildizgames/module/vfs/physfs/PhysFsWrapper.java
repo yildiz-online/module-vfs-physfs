@@ -68,6 +68,7 @@ public class PhysFsWrapper implements Vfs {
         return new PhysFsContainer(NativePointer.create(PhysFsWrapperNative.registerContainer(this.pointer.getPointerAddress(), path)));
     }
 
+    @Override
     public List<VfsArchiveInfo> getSupportedArchiveInfo() {
         return Arrays.stream(PhysFsWrapperNative.getSupportedArchiveType(this.pointer.getPointerAddress()))
                 .mapToObj(NativePointer::create)
