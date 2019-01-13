@@ -41,9 +41,9 @@ class Wrapper {
 public:
 
     Wrapper() {
-        if(PHYSFS_isInit) {
+        if(PHYSFS_isInit() == 0) {
             std::cout << "----------Initializing physfs.-----------" << std::endl;
-            if (PHYSFS_init(NULL)) {
+            if (PHYSFS_init(NULL) != 0) {
                 std::cout << "------------Physfs initialized.----------" << std::endl;
             } else {
                 PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
@@ -65,12 +65,11 @@ public:
     }
 
     Container* registerContainer(const std::string& path) const{
-        std::cout << "Registering container " << path << std::endl;
         return new Container(path);
     }
 
     void close() {
-        if(PHYSFS_isInit) {
+        if(PHYSFS_isInit() != 0) {
             if (!PHYSFS_deinit()) {
                 PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
                 throw std::runtime_error(PHYSFS_getErrorByCode(code));

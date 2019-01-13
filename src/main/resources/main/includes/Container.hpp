@@ -43,10 +43,14 @@ public:
 
     Container(const std::string& path) {
         std::cout << "Creating container for: " << path << std::endl;
-        std::cout << "Check settings " << std::endl;
-        if (!PHYSFS_mount(path.c_str(), NULL, 1)) {
-            std::cout << "Failed to create container." << std::endl;
-        }
+        PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
+        std::cout << PHYSFS_getErrorByCode(code) << std::endl;
+        PHYSFS_AddToSearchPath(path.c_str(), 1);
+        PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
+        std::cout << PHYSFS_getErrorByCode(code) << std::endl;
+        //if (!PHYSFS_mount(path.c_str(), NULL, 1)) {
+        //    std::cout << "Failed to create container." << std::endl;
+       // }
     }
 
     File* openFile(const std::string& file) const {
