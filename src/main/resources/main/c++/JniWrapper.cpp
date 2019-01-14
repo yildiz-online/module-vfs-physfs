@@ -40,14 +40,11 @@ JNIEXPORT jlong JNICALL Java_jni_PhysFsWrapperNative_initialize(JNIEnv* env, job
 
 JNIEXPORT jlong JNICALL Java_jni_PhysFsWrapperNative_registerContainer(JNIEnv* env, jobject o, jlong pointer, jstring jpath) {
     try {
-        std::cout << "JNI register container" << std::endl;
         yz::physfs::Wrapper* wrapper = reinterpret_cast<yz::physfs::Wrapper*>(pointer);
         JniStringWrapper path = JniStringWrapper(env, jpath);
-        std::cout << "Path:" << path.getValue() << std::endl;
 
         yz::physfs::Container* container = wrapper->registerContainer(path.getValue());
-        return -1L;
-        //return reinterpret_cast<jlong>(container);
+        return reinterpret_cast<jlong>(container);
     } catch (std::exception& e) {
         throwException(env, e.what());
     }
