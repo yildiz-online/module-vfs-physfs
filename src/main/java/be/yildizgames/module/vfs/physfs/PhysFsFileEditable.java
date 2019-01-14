@@ -29,11 +29,22 @@ package be.yildizgames.module.vfs.physfs;
 import be.yildizgames.common.jni.NativePointer;
 import be.yildizgames.module.vfs.VfsFileEditable;
 
+/**
+ * PhysFS implementation for a writable file.
+ * @author Grégory Van den Borre
+ */
 class PhysFsFileEditable implements VfsFileEditable {
 
+    /**
+     * Pointer address of the native object.
+     */
     private final NativePointer pointer;
 
-    PhysFsFileEditable(NativePointer nativePointer) {
-        this.pointer = nativePointer;
+    /**
+     * Create a new instance.
+     * @param pointer Pointer to the native object.
+     */
+    PhysFsFileEditable(final NativePointer pointer) {
+        this.pointer = pointer;
     }
 }

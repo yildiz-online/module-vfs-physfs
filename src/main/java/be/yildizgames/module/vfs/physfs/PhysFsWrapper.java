@@ -46,17 +46,23 @@ import java.util.stream.Collectors;
  */
 public class PhysFsWrapper implements Vfs {
 
-    private final Logger logger = LoggerFactory.getLogger(PhysFsWrapper.class);
-
+    /**
+     * Pointer address of the native object.
+     */
     private final NativePointer pointer;
 
+    /**
+     * Create a new instance, uncompress and load the native libs if necessary, and initialize the PhysFS library.
+     * @param loader Will unzip and  load the native libraries.
+     */
     private PhysFsWrapper(final NativeResourceLoader loader) {
         super();
-        this.logger.info("Initializing PhysFs vfs component...");
+        Logger logger = LoggerFactory.getLogger(PhysFsWrapper.class);
+        logger.info("Initializing PhysFs vfs component...");
         loader.loadBaseLibrary();
         loader.loadLibrary("libyildizphysfs");
         this.pointer = NativePointer.create(PhysFsWrapperNative.initialize());
-        this.logger.info("PhysFs vfs component initialized.");
+        logger.info("PhysFs vfs component initialized.");
     }
 
     public static Vfs create() {
@@ -68,12 +74,12 @@ public class PhysFsWrapper implements Vfs {
     }
 
     @Override
-    public VfsContainer registerContainer(String path) {
+    public final VfsContainer registerContainer(final String path) {
         return new PhysFsContainer(NativePointer.create(PhysFsWrapperNative.registerContainer(this.pointer.getPointerAddress(), path)));
     }
 
     @Override
-    public List<VfsArchiveInfo> getSupportedArchiveInfo() {
+    public final List<VfsArchiveInfo> getSupportedArchiveInfo() {
         return Arrays.stream(PhysFsWrapperNative.getSupportedArchiveType(this.pointer.getPointerAddress()))
                 .mapToObj(NativePointer::create)
                 .map(PhysFsArchiveInfo::new)

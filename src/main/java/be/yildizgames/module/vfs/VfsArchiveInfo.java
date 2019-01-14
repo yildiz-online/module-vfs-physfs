@@ -26,5 +26,22 @@
 
 package be.yildizgames.module.vfs;
 
+/**
+ * A Vfs Archive info will provide the data about an archive type.
+ * @author Grégory Van den Borre
+ */
 public interface VfsArchiveInfo {
+
+    /**
+     * Provide the file extension.
+     * @return The extension.
+     */
+    String getExtension();
+
+    /**
+     * Provide the description of the type.
+     * @return The description.
+     */
+    String getDescription();
+
 }

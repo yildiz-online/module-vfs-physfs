@@ -26,5 +26,23 @@
 
 package be.yildizgames.module.vfs;
 
+/**
+ * A container is a virtual directory containing files and sub directories.
+ * @author Grégory Van den Borre
+ */
 public interface VfsContainer {
+
+    /**
+     * Open a read only file.
+     * @param name File name.
+     * @return The file.
+     */
+    VfsFile openFile(String name);
+
+    /**
+     * Open a write only file.
+     * @param name File name.
+     * @return The file.
+     */
+    VfsFileEditable openFileToWrite(String name);
 }

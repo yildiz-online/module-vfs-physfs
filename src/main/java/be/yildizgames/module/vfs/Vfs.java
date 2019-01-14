@@ -34,7 +34,16 @@ import java.util.List;
  */
 public interface Vfs {
 
+    /**
+     * Register a container to be used with the VFS.
+     * @param path Container path.
+     * @return The created vfs container.
+     */
     VfsContainer registerContainer(String path);
 
+    /**
+     * Provide the list of all supported archive type information.
+     * @return The list.
+     */
     List<VfsArchiveInfo> getSupportedArchiveInfo();
 }

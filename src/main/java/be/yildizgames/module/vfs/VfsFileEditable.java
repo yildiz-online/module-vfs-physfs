@@ -26,5 +26,9 @@
 
 package be.yildizgames.module.vfs;
 
+/**
+ * A write only file.
+ * @author Grégory Van den Borre
+ */
 public interface VfsFileEditable {
 }

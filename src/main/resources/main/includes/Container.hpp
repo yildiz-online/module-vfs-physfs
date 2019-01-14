@@ -42,12 +42,7 @@ public:
 //https://icculus.org/physfs/physfstut.tx
 
     Container(const std::string& path) {
-        std::cout << "Creating container for: " << path << std::endl;
-        PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
-        std::cout << PHYSFS_getErrorByCode(code) << std::endl;
         PHYSFS_mount(path.c_str(), NULL, 1);
-        code = PHYSFS_getLastErrorCode();
-        std::cout << PHYSFS_getErrorByCode(code) << std::endl;
     }
 
     File* openFile(const std::string& file) const {

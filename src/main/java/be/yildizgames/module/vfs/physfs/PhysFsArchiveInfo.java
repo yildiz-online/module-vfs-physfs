@@ -28,13 +28,35 @@ package be.yildizgames.module.vfs.physfs;
 
 import be.yildizgames.common.jni.NativePointer;
 import be.yildizgames.module.vfs.VfsArchiveInfo;
+import jni.PhysFsArchiveInfoNative;
 
+/**
+ * PhysFS implementation for an archive info.
+ * @author Grégory Van den Borre
+ */
 class PhysFsArchiveInfo implements VfsArchiveInfo {
 
+    /**
+     * Pointer address of the native object.
+     */
     private final NativePointer pointer;
 
-    PhysFsArchiveInfo(NativePointer nativePointer) {
+    /**
+     * Create a new instance.
+     * @param pointer Pointer to the native object.
+     */
+    PhysFsArchiveInfo(final NativePointer pointer) {
         super();
-        this.pointer = nativePointer;
+        this.pointer = pointer;
+    }
+
+    @Override
+    public final String getExtension() {
+        return PhysFsArchiveInfoNative.getExtension(this.pointer.getPointerAddress());
+    }
+
+    @Override
+    public final String getDescription() {
+        return PhysFsArchiveInfoNative.getDescription(this.pointer.getPointerAddress());
     }
 }

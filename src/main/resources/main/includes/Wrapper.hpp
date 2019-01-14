@@ -41,16 +41,8 @@ class Wrapper {
 public:
 
     Wrapper() {
-    std::cout << "initialized1:" << PHYSFS_isInit() <<std::endl;
         if(PHYSFS_isInit() == 0) {
-            std::cout << "----------Initializing physfs.-----------" << std::endl;
-            int ret = PHYSFS_init(NULL);
-            PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
-            std::cout << "return value "<< ret << std::endl;
-            std::cout << "error "<< code << ":" << PHYSFS_getErrorByCode(code) << std::endl;
-            std::cout << "initialized2:" << PHYSFS_isInit() <<std::endl;
-        } else {
-            std::cout << "----------Physfs already initialized.-----------" << std::endl;
+            PHYSFS_init(NULL);
         }
     }
 

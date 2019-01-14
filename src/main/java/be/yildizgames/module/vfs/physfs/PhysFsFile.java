@@ -29,12 +29,23 @@ package be.yildizgames.module.vfs.physfs;
 import be.yildizgames.common.jni.NativePointer;
 import be.yildizgames.module.vfs.VfsFile;
 
+/**
+ * PhysFS implementation for a file.
+ * @author Grégory Van den Borre
+ */
 class PhysFsFile implements VfsFile {
 
+    /**
+     * Pointer address of the native object.
+     */
     private final NativePointer pointer;
 
-    PhysFsFile(NativePointer nativePointer) {
+    /**
+     * Create a new instance.
+     * @param pointer Pointer to the native object.
+     */
+    PhysFsFile(final NativePointer pointer) {
         super();
-        this.pointer = nativePointer;
+        this.pointer = pointer;
     }
 }
