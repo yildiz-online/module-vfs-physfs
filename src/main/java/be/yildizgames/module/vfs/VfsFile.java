@@ -32,6 +32,6 @@ package be.yildizgames.module.vfs;
  */
 public interface VfsFile {
 
-    long getSize();
+    int getSize();
 
 }

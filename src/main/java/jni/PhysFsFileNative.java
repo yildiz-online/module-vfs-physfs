@@ -2,5 +2,5 @@ package jni;
 
 public class PhysFsFileNative {
 
-    public static native long getSize(long pointer);
+    public static native int getSize(long pointer);
 }
