@@ -23,6 +23,7 @@
 
 #include "../includes/JniContainer.h"
 #include "../includes/Container.hpp"
+#include "../includes/JniUtil.h"
 
 /**
 * @author Grégory Van den Borre
