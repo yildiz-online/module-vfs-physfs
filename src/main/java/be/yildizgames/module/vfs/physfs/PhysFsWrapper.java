@@ -36,6 +36,7 @@ import jni.PhysFsWrapperNative;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -74,8 +75,8 @@ public class PhysFsWrapper implements Vfs {
     }
 
     @Override
-    public final VfsContainer registerContainer(final String path) {
-        return new PhysFsContainer(NativePointer.create(PhysFsWrapperNative.registerContainer(this.pointer.getPointerAddress(), path)));
+    public final VfsContainer registerContainer(final Path path) {
+        return new PhysFsContainer(NativePointer.create(PhysFsWrapperNative.registerContainer(this.pointer.getPointerAddress(), path.toString())));
     }
 
     @Override

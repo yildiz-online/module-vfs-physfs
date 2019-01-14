@@ -26,6 +26,7 @@
 
 package be.yildizgames.module.vfs;
 
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -39,7 +40,7 @@ public interface Vfs {
      * @param path Container path.
      * @return The created vfs container.
      */
-    VfsContainer registerContainer(String path);
+    VfsContainer registerContainer(Path path);
 
     /**
      * Provide the list of all supported archive type information.
