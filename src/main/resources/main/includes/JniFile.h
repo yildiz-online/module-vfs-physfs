@@ -1,5 +1,4 @@
 /*
- *
  * This file is part of the Yildiz-Engine project, licenced under the MIT License  (MIT)
  *
  * Copyright (c) 2018 Grégory Van den Borre
@@ -13,45 +12,31 @@
  * subject to the following conditions:
  *
  * The above copyright notice and this permission notice shall be included in all copies or substantial
- *  portions of the Software.
+ * portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- *  WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
  * OR COPYRIGHT  HOLDERS BE LIABLE FOR ANY CLAIM,
- *  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
- *
- *
  */
 
-package be.yildizgames.module.vfs.physfs;
+#ifndef JNI_PHYSFS_FILE_H
+#define JNI_PHYSFS_FILE_H
 
-import be.yildizgames.common.jni.NativePointer;
-import be.yildizgames.module.vfs.VfsFile;
-import jni.PhysFsFileNative;
+#include <jni.h>
 
 /**
- * PhysFS implementation for a file.
- * @author Grégory Van den Borre
- */
-class PhysFsFile implements VfsFile {
+* @author Grégory Van den Borre
+*/
 
-    /**
-     * Pointer address of the native object.
-     */
-    private final NativePointer pointer;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-    /**
-     * Create a new instance.
-     * @param pointer Pointer to the native object.
-     */
-    PhysFsFile(final NativePointer pointer) {
-        super();
-        this.pointer = pointer;
-    }
+JNIEXPORT jlong JNICALL Java_jni_PhysFsFileNative_getSize(JNIEnv* env, jobject o, jlong pointer);
 
-    @Override
-    public long getSize() {
-        return PhysFsFileNative.getSize(this.pointer.getPointerAddress());
-    }
+#ifdef __cplusplus
 }
+#endif
+#endif

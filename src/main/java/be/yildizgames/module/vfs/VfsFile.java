@@ -31,4 +31,7 @@ package be.yildizgames.module.vfs;
  * @author Grégory Van den Borre
  */
 public interface VfsFile {
+
+    long getSize();
+
 }
