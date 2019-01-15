@@ -29,13 +29,20 @@
 #include <stdexcept>
 
 namespace yz {
-
 namespace physfs {
 
+/**
+* This file is write only, it is not meant to be read.
+* @author Grégory Van den Borre
+*/
 class FileEditable {
 
 public:
 
+    /**
+    * Create a new instance from a path.
+    * @param path Path of the file in the VFS.
+    */
     FileEditable(const std::string& path) {
         this->file = PHYSFS_openWrite(path.c_str());
         if (!file) {
@@ -47,6 +54,9 @@ public:
 
 private:
 
+    /**
+    * Internal physfs file.
+    */
     PHYSFS_file* file;
 
 };

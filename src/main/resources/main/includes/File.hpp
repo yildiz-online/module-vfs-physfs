@@ -55,31 +55,33 @@ public:
         }
     }
 
-    //FIXME do
-    void read() const {
-       //int read;
-       //while(!eof)
-       // this-> read = PHYSFS_readBytes(this->file, this->buffer, 1024);
+    bool isEof() const {
+        return PHYSFS_eof(this->file) != 0;
     }
 
-
-    //internal
-    int readBytes(char* data, int count){
-        int read = PHYSFS_read(this->file, data, 1, count);
-        if (read == -1){
-            //error
+    int readBytes(void* data, int count){
+        int read = PHYSFS_readBytes(this->file, data, count);
+        if (read < count && !this->isEof()){
+            PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
+            throw std::runtime_error(PHYSFS_getErrorByCode(code));
         }
         return read;
     }
 
-    //internal
     void seek(int position) const {
-        PHYSFS_seek(this->file, position);
+        if(PHYSFS_seek(this->file, position) == 0) {
+            PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
+            throw std::runtime_error(PHYSFS_getErrorByCode(code));
+        }
     }
 
-    //internal
     int tell() const {
-        return  PHYSFS_tell(this->file);
+        int result = PHYSFS_tell(this->file);
+        if(result == -1) {
+            PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
+            throw std::runtime_error(PHYSFS_getErrorByCode(code));
+        }
+        return result;
     }
 
 
