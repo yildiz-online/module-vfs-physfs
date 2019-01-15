@@ -55,6 +55,33 @@ public:
         }
     }
 
+    //FIXME do
+    void read() const {
+       //int read;
+       //while(!eof)
+       // this-> read = PHYSFS_readBytes(this->file, this->buffer, 1024);
+    }
+
+
+    //internal
+    int readBytes(char* data, int count){
+        int read = PHYSFS_read(this->file, data, 1, count);
+        if (read == -1){
+            //error
+        }
+        return read;
+    }
+
+    //internal
+    void seek(int position) const {
+        PHYSFS_seek(this->file, position);
+    }
+
+    //internal
+    int tell() const {
+        return  PHYSFS_tell(this->file);
+    }
+
 
 private:
 

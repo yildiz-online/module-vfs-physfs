@@ -59,6 +59,10 @@ public:
         return new Container(path);
     }
 
+    void allowSimLinks(bool allow) {
+        PHYSFS_permitSymbolicLinks(allow?1:0);
+    }
+
     void close() {
         if(PHYSFS_isInit() != 0) {
             if (!PHYSFS_deinit()) {
