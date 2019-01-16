@@ -1,4 +1,5 @@
 /*
+ *
  * This file is part of the Yildiz-Engine project, licenced under the MIT License  (MIT)
  *
  * Copyright (c) 2018 Grégory Van den Borre
@@ -12,52 +13,30 @@
  * subject to the following conditions:
  *
  * The above copyright notice and this permission notice shall be included in all copies or substantial
- * portions of the Software.
+ *  portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+ *  WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
  * OR COPYRIGHT  HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
+ *
+ *
  */
 
-#ifndef YZ_PHYSFS_CONTAINER_H
-#define YZ_PHYSFS_CONTAINER_H
+package be.yildizgames.module.vfs.exception;
 
-#include <physfs.h>
-#include <string>
-#include <stdexcept>
-#include "File.hpp"
-#include "FileEditable.hpp"
+import be.yildizgames.common.exception.technical.TechnicalException;
 
-namespace yz {
+import java.nio.file.Path;
 
-namespace physfs {
+public class VfsException extends TechnicalException {
 
-class Container {
-
-public:
-
-//https://icculus.org/physfs/docs-devel/html/physfs_8h.html
-//https://icculus.org/physfs/physfstut.tx
-
-    Container(const std::string& path) {
-        if(PHYSFS_mount(path.c_str(), NULL, 1) == 0) {
-            PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
-            throw std::runtime_error(PHYSFS_getErrorByCode(code));
-        }
+    private VfsException(String message) {
+        super(message);
     }
 
-    File* openFile(const std::string& file) const {
-        return new File(file);
+    public static VfsException containerNotExists(Path container) {
+        return new VfsException("The container " + container + " does not exists");
     }
-
-    FileEditable* openFileToWrite(const std::string& file) const {
-        return new FileEditable(file);
-    }
-
-};
 }
-}
-
-#endif

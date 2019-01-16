@@ -26,16 +26,19 @@
 
 package be.yildizgames.module.vfs.physfs;
 
+import be.yildizgames.common.exception.implementation.ImplementationException;
 import be.yildizgames.common.jni.NativePointer;
 import be.yildizgames.common.libloader.GlobalNativeResourceLoader;
 import be.yildizgames.common.libloader.NativeResourceLoader;
 import be.yildizgames.module.vfs.Vfs;
 import be.yildizgames.module.vfs.VfsArchiveInfo;
 import be.yildizgames.module.vfs.VfsContainer;
+import be.yildizgames.module.vfs.exception.VfsException;
 import jni.PhysFsWrapperNative;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
@@ -58,6 +61,7 @@ public class PhysFsWrapper implements Vfs {
      */
     private PhysFsWrapper(final NativeResourceLoader loader) {
         super();
+        ImplementationException.throwForNull(loader);
         Logger logger = LoggerFactory.getLogger(PhysFsWrapper.class);
         logger.info("Initializing PhysFs vfs component...");
         loader.loadBaseLibrary();
@@ -66,16 +70,29 @@ public class PhysFsWrapper implements Vfs {
         logger.info("PhysFs vfs component initialized.");
     }
 
+    /**
+     * Create a new instance, the native resources will be loaded from the classpath jars.
+     * @return The created instance.
+     */
     public static Vfs create() {
         return create(GlobalNativeResourceLoader.getInstance().getLoader());
     }
 
+    /**
+     * Create a new instance.
+     * @param loader Loader to load the native resources.
+     * @return The created instance.
+     */
     public static Vfs create(final NativeResourceLoader loader) {
         return new PhysFsWrapper(loader);
     }
 
     @Override
     public final VfsContainer registerContainer(final Path path) {
+        ImplementationException.throwForNull(path);
+        if(Files.notExists(path)) {
+            throw VfsException.containerNotExists(path);
+        }
         return new PhysFsContainer(NativePointer.create(PhysFsWrapperNative.registerContainer(this.pointer.getPointerAddress(), path.toString())));
     }
 
