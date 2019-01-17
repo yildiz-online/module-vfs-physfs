@@ -21,54 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  */
 
-#ifndef YZ_PHYSFS_FILE_EDITABLE_H
-#define YZ_PHYSFS_FILE_EDITABLE_H
-
 #include <physfs.h>
-#include <string>
-#include <stdexcept>
-
-namespace yz {
-namespace physfs {
+#include "../includes/JniUtil.h"
 
 /**
-* This file is write only, it is not meant to be read.
+* Low level interface to expose all the functions.
 * @author Grégory Van den Borre
 */
-class FileEditable {
 
-public:
-
-    /**
-    * Create a new instance from a path.
-    * @param path Path of the file in the VFS.
-    */
-    FileEditable(const std::string& path) {
-        this->file = PHYSFS_openWrite(path.c_str());
-        if (!file) {
-            PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
-            throw std::runtime_error(PHYSFS_getErrorByCode(code));
-        }
+JNIEXPORT void JNICALL Java_jni_PhysFsNative_mount(JNIEnv* env, jobject o, jstring jpath) {
+    JniStringWrapper path = JniStringWrapper(env, jpath);
+    if(PHYSFS_mount(path.c_str(), NULL, 1) == 0) {
+        PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
+        throw std::runtime_error(PHYSFS_getErrorByCode(code));
     }
-
-    void overwrite(const byte[] bytes) {
-        size_t size = sizeof(bytes);
-        if(PHYSFS_writeBytes(this->file, bytes, size) < size) {
-            PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
-            throw std::runtime_error(PHYSFS_getErrorByCode(code));
-        }
-    }
-
-
-private:
-
-    /**
-    * Internal physfs file.
-    */
-    PHYSFS_file* file;
-
-};
-}
 }
 
-#endif
+JNIEXPORT void JNICALL Java_jni_PhysFsNative_setWriteDir(JNIEnv* env, jobject o, jstring jpath) {
+    JniStringWrapper path = JniStringWrapper(env, jpath);
+    if(PHYSFS_setWriteDir(path.c_str()) == 0) {
+        PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
+        throw std::runtime_error(PHYSFS_getErrorByCode(code));
+    }
+}
+

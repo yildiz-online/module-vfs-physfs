@@ -21,51 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  */
 
-#ifndef YZ_PHYSFS_FILE_EDITABLE_H
-#define YZ_PHYSFS_FILE_EDITABLE_H
+#ifndef YZ_PHYSFS_NEWCONTAINER_H
+#define YZ_PHYSFS_NEWCONTAINER_H
 
 #include <physfs.h>
 #include <string>
 #include <stdexcept>
 
 namespace yz {
+
 namespace physfs {
 
-/**
-* This file is write only, it is not meant to be read.
-* @author Grégory Van den Borre
-*/
-class FileEditable {
+class NewContainer {
 
 public:
 
-    /**
-    * Create a new instance from a path.
-    * @param path Path of the file in the VFS.
-    */
-    FileEditable(const std::string& path) {
-        this->file = PHYSFS_openWrite(path.c_str());
-        if (!file) {
+    NewContainer(const std::string& path) {
+        if(PHYSFS_setWriteDir(path.c_str()) == 0) {
             PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
             throw std::runtime_error(PHYSFS_getErrorByCode(code));
         }
     }
 
-    void overwrite(const byte[] bytes) {
-        size_t size = sizeof(bytes);
-        if(PHYSFS_writeBytes(this->file, bytes, size) < size) {
-            PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
-            throw std::runtime_error(PHYSFS_getErrorByCode(code));
-        }
-    }
-
-
-private:
-
-    /**
-    * Internal physfs file.
-    */
-    PHYSFS_file* file;
 
 };
 }
