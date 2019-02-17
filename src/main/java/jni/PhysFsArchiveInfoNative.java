@@ -28,6 +28,10 @@ package jni;
 
 public class PhysFsArchiveInfoNative {
 
+    private PhysFsArchiveInfoNative() {
+        super();
+    }
+
     public static native String getExtension(long pointer);
 
     public static native String getDescription(long pointer);

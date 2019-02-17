@@ -28,6 +28,10 @@ package jni;
 
 public class PhysFsContainerNative {
 
+    private PhysFsContainerNative() {
+        super();
+    }
+
     public static native long openFile(long pointer, String name);
 
     public static native long openFileToWrite(long pointer, String name);

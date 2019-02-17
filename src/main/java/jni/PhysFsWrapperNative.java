@@ -28,6 +28,10 @@ package jni;
 
 public class PhysFsWrapperNative {
 
+    private PhysFsWrapperNative() {
+        super();
+    }
+
     public static native long initialize();
 
     public static native long registerContainer(long pointer, String path);
