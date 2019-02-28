@@ -68,14 +68,3 @@ JNIEXPORT jlongArray JNICALL Java_jni_PhysFsWrapperNative_getSupportedArchiveTyp
     }
     return env->NewLongArray(0);
 }
-
-JNIEXPORT void JNICALL Java_jni_PhysFsWrapperNative_setDirectoryWritable(JNIEnv* env, jobject o, jstring jpath) {
-    try {
-        yz::physfs::Wrapper* wrapper = reinterpret_cast<yz::physfs::Wrapper*>(pointer);
-        JniStringWrapper path = JniStringWrapper(env, jpath);
-        wrapper->setDirectoryWritable(path.getValue());
-    } catch (std::exception& e) {
-        throwException(env, e.what());
-    }
-    return env->NewLongArray(0);
-}

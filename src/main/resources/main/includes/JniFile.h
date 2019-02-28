@@ -36,6 +36,8 @@ extern "C" {
 
 JNIEXPORT jint JNICALL Java_jni_PhysFsFileNative_getSize(JNIEnv* env, jobject o, jlong pointer);
 
+JNIEXPORT void JNICALL Java_jni_PhysFsFileNative_write(JNIEnv* env, jobject o, jlong pointer, jbyteArray data);
+
 #ifdef __cplusplus
 }
 #endif

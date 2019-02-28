@@ -37,6 +37,4 @@ public class PhysFsWrapperNative {
     public static native long registerContainer(long pointer, String path);
 
     public static native long[] getSupportedArchiveType(long pointer);
-
-    public static native void setDirectoryWritable(long pointer, String jpath);
 }

@@ -35,4 +35,6 @@ public class PhysFsContainerNative {
     public static native long openFile(long pointer, String name);
 
     public static native long openFileToWrite(long pointer, String name);
+
+    public static native void setDirectoryWritable(long pointer);
 }

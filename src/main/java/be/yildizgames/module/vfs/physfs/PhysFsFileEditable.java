@@ -26,8 +26,15 @@
 
 package be.yildizgames.module.vfs.physfs;
 
+import be.yildizgames.common.exception.implementation.ImplementationException;
 import be.yildizgames.common.jni.NativePointer;
 import be.yildizgames.module.vfs.VfsFileEditable;
+import be.yildizgames.module.vfs.exception.VfsException;
+import jni.PhysFsFileNative;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * PhysFS implementation for a writable file.
@@ -40,11 +47,32 @@ class PhysFsFileEditable implements VfsFileEditable {
      */
     private final NativePointer pointer;
 
+    private final PhysFsContainer parent;
+
     /**
      * Create a new instance.
      * @param pointer Pointer to the native object.
      */
-    PhysFsFileEditable(final NativePointer pointer) {
+    PhysFsFileEditable(final NativePointer pointer, PhysFsContainer parent) {
+        super();
         this.pointer = pointer;
+        this.parent = parent;
+    }
+
+    @Override
+    public final void write(final byte[] data) {
+        ImplementationException.throwForNull(data);
+        this.parent.setDirectoryWritable();
+        PhysFsFileNative.write(this.pointer.getPointerAddress(), data);
+    }
+
+    @Override
+    public final void write(final Path file) {
+        ImplementationException.throwForNull(file);
+        try {
+            this.write(Files.readAllBytes(file));
+        } catch (IOException e) {
+            throw VfsException.io(e);
+        }
     }
 }

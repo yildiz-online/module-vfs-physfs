@@ -26,9 +26,24 @@
 
 package be.yildizgames.module.vfs;
 
+import java.nio.file.Path;
+
 /**
  * A write only file.
  * @author Grégory Van den Borre
  */
 public interface VfsFileEditable {
+
+    /**
+     * Write the content of a file
+     * @param data File data.
+     */
+    void write(byte[] data);
+
+    /**
+     * Write the content of a file
+     * @param file Original file.
+     */
+    void write(Path file);
+
 }

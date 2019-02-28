@@ -45,4 +45,9 @@ public interface VfsContainer {
      * @return The file.
      */
     VfsFileEditable openFileToWrite(String name);
+
+    /**
+     * Allow a given directory to be writable, only one directory can be used at a time, invoking this method will replace the previous value.
+     */
+    void setDirectoryWritable();
 }

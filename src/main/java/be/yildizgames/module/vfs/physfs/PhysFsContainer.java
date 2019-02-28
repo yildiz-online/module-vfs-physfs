@@ -60,7 +60,13 @@ class PhysFsContainer implements VfsContainer {
 
     @Override
     public  final VfsFileEditable openFileToWrite(final String name) {
+        this.setDirectoryWritable();
         long address = PhysFsContainerNative.openFileToWrite(this.pointer.getPointerAddress(), name);
-        return new PhysFsFileEditable(NativePointer.create(address));
+        return new PhysFsFileEditable(NativePointer.create(address), this);
+    }
+
+    @Override
+    public final void setDirectoryWritable() {
+        PhysFsContainerNative.setDirectoryWritable(this.pointer.getPointerAddress());
     }
 }

@@ -51,7 +51,7 @@ class PhysFsFile implements VfsFile {
     }
 
     @Override
-    public int getSize() {
+    public final int getSize() {
         return PhysFsFileNative.getSize(this.pointer.getPointerAddress());
     }
 }

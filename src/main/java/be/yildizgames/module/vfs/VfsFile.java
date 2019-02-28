@@ -32,6 +32,10 @@ package be.yildizgames.module.vfs;
  */
 public interface VfsFile {
 
+    /**
+     * Provide the file size.
+     * @return The file size.
+     */
     int getSize();
 
 }

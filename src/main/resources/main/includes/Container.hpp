@@ -42,6 +42,7 @@ public:
 //https://icculus.org/physfs/physfstut.tx
 
     Container(const std::string& path) {
+        this->path = path;
         if(PHYSFS_mount(path.c_str(), NULL, 1) == 0) {
             PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
             throw std::runtime_error(PHYSFS_getErrorByCode(code));
@@ -55,6 +56,14 @@ public:
     FileEditable* openFileToWrite(const std::string& file) const {
         return new FileEditable(file);
     }
+
+    void setDirectoryWritable() {
+        PHYSFS_setWriteDir(this->path.c_str());
+    }
+
+private:
+
+    std::string& path;
 
 };
 }

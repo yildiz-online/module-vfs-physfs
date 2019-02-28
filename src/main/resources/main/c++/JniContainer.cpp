@@ -41,3 +41,12 @@ JNIEXPORT jlong JNICALL Java_jni_PhysFsContainerNative_openFileToWrite(JNIEnv* e
     return reinterpret_cast<jlong>(container->openFileToWrite(path.getValue()));
 }
 
+JNIEXPORT void JNICALL Java_jni_PhysFsWrapperNative_setDirectoryWritable(JNIEnv* env, jobject o) {
+    try {
+        yz::physfs::Container* container = reinterpret_cast<yz::physfs::Container*>(pointer);
+        container->setDirectoryWritable();
+    } catch (std::exception& e) {
+        throwException(env, e.what());
+    }
+}
+
