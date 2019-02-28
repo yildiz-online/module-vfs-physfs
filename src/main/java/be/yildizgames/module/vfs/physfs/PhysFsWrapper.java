@@ -104,4 +104,8 @@ public class PhysFsWrapper implements Vfs {
                 .collect(Collectors.toList());
     }
 
+    public final void setDirectoryWritable(String path){
+        PhysFsWrapperNative.setDirectoryWritable(this.pointer.getPointerAddress(), path);
+    }
+
 }

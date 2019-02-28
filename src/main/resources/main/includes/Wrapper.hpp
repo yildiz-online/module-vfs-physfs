@@ -63,6 +63,10 @@ public:
         PHYSFS_permitSymbolicLinks(allow?1:0);
     }
 
+    void setDirectoryWritable(std::string& path) {
+        PHYSFS_setWriteDir(path.c_str());
+    }
+
     void close() {
         if(PHYSFS_isInit() != 0) {
             if (!PHYSFS_deinit()) {

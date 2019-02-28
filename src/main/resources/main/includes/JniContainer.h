@@ -38,6 +38,8 @@ JNIEXPORT jlong JNICALL Java_jni_PhysFsContainerNative_openFile(JNIEnv* env, job
 
 JNIEXPORT jlong JNICALL Java_jni_PhysFsContainerNative_openFileToWrite(JNIEnv* env, jobject o, jlong pointer, jstring jpath);
 
+JNIEXPORT void JNICALL Java_jni_PhysFsWrapperNative_setDirectoryWritable(JNIEnv* env, jobject o, jstring jpath);
+
 #ifdef __cplusplus
 }
 #endif
