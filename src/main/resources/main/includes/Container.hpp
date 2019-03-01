@@ -62,7 +62,7 @@ public:
 
 private:
 
-    std::string& path;
+    const std::string& path;
 
 };
 }
