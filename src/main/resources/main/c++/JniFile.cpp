@@ -39,8 +39,8 @@ JNIEXPORT void JNICALL Java_jni_PhysFsFileNative_write(JNIEnv* env, jobject o, j
     yz::physfs::FileEditable* file = reinterpret_cast<yz::physfs::FileEditable*>(pointer);
     try {
         jsize len  = env->GetArrayLength(array);
-        jbyte* result = (jbyte *)malloc(len * sizeof(jbyte));
-        env->GetByteArrayRegion(array,0,len,result);
+        unsigned char* result = new unsigned char[len];
+        env->GetByteArrayRegion(array, 0, len, reinterpret_cast<jbyte*>(result));
         file->write(result);
     } catch (std::exception& e) {
         throwException(env, e.what());
