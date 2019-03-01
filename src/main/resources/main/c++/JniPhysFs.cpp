@@ -31,17 +31,17 @@
 
 JNIEXPORT void JNICALL Java_jni_PhysFsNative_mount(JNIEnv* env, jobject o, jstring jpath) {
     JniStringWrapper path = JniStringWrapper(env, jpath);
-    if(PHYSFS_mount(path.c_str(), NULL, 1) == 0) {
+    if(PHYSFS_mount(path.getValue().c_str(), NULL, 1) == 0) {
         PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
-        throw std::runtime_error(PHYSFS_getErrorByCode(code));
+        throwException(env, PHYSFS_getErrorByCode(code));
     }
 }
 
 JNIEXPORT void JNICALL Java_jni_PhysFsNative_setWriteDir(JNIEnv* env, jobject o, jstring jpath) {
     JniStringWrapper path = JniStringWrapper(env, jpath);
-    if(PHYSFS_setWriteDir(path.c_str()) == 0) {
+    if(PHYSFS_setWriteDir(path.getValue().c_str()) == 0) {
         PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
-        throw std::runtime_error(PHYSFS_getErrorByCode(code));
+        throwException(env, PHYSFS_getErrorByCode(code));
     }
 }
 
