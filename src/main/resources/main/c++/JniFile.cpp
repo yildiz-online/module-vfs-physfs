@@ -23,6 +23,7 @@
 
 #include "../includes/JniFile.h"
 #include "../includes/File.hpp"
+#include "../includes/FileEditable.hpp"
 #include "../includes/JniUtil.h"
 
 /**
