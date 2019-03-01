@@ -51,7 +51,7 @@ public:
         }
     }
 
-    void write(const unsigned char[] bytes) {
+    void write(const unsigned char* bytes) {
         size_t size = sizeof(bytes);
         if(PHYSFS_writeBytes(this->file, bytes, size) < size) {
             PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
