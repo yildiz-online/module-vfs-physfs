@@ -40,7 +40,7 @@ public:
 //https://icculus.org/physfs/docs-devel/html/physfs_8h.html
 //https://icculus.org/physfs/physfstut.tx
 
-    Container(const std::string& path) : path(path){
+    Container(const std::string path) : path(path){
         if(PHYSFS_mount(path.c_str(), NULL, 1) == 0) {
             PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
             throw std::runtime_error(PHYSFS_getErrorByCode(code));
@@ -64,7 +64,7 @@ public:
 
 private:
 
-    const std::string& path;
+    const std::string path;
 
 };
 }
