@@ -32,11 +32,20 @@
 JNIEXPORT jlong JNICALL Java_jni_PhysFsContainerNative_openFile(JNIEnv* env, jobject o, jlong pointer, jstring jpath) {
     yz::physfs::Container* container = reinterpret_cast<yz::physfs::Container*>(pointer);
     JniStringWrapper path = JniStringWrapper(env, jpath);
-    return reinterpret_cast<jlong>(container->openFile(path.getValue()));
+    try {
+        return reinterpret_cast<jlong>(container->openFile(path.getValue()));
+    } catch (std::exception& e) {
+        throwException(env, e.what());
+        return -1L;
+    }
 }
 
 JNIEXPORT void JNICALL Java_jni_PhysFsContainerNative_reinit(JNIEnv* env, jobject o, jlong pointer) {
     yz::physfs::Container* container = reinterpret_cast<yz::physfs::Container*>(pointer);
-    container->reinit();
+    try {
+        container->reinit();
+    } catch (std::exception& e) {
+        throwException(env, e.what());
+    }
 }
 
