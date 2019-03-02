@@ -28,7 +28,6 @@
 #include <string>
 #include <stdexcept>
 #include "File.hpp"
-#include "FileEditable.hpp"
 
 namespace yz {
 
