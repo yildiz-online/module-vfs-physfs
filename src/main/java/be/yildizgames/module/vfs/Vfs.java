@@ -26,6 +26,7 @@
 
 package be.yildizgames.module.vfs;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -41,6 +42,8 @@ public interface Vfs {
      * @return The created vfs container.
      */
     VfsContainer registerContainer(Path path);
+
+    VfsContainer createContainer(Path path, VfsArchiveFormat format) throws IOException;
 
     /**
      * Provide the list of all supported archive type information.

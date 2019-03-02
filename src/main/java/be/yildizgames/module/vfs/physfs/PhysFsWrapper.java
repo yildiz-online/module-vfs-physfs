@@ -34,6 +34,7 @@ import be.yildizgames.module.vfs.Vfs;
 import be.yildizgames.module.vfs.VfsArchiveInfo;
 import be.yildizgames.module.vfs.VfsContainer;
 import be.yildizgames.module.vfs.exception.VfsException;
+import be.yildizgames.module.vfs.internal.BaseVfs;
 import jni.PhysFsWrapperNative;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +49,7 @@ import java.util.stream.Collectors;
  * PhysFs implementation for the VFS.
  * @author Grégory Van den Borre
  */
-public class PhysFsWrapper implements Vfs {
+public class PhysFsWrapper extends BaseVfs implements Vfs {
 
     /**
      * Pointer address of the native object.
@@ -93,7 +94,7 @@ public class PhysFsWrapper implements Vfs {
         if(Files.notExists(path)) {
             throw VfsException.containerNotExists(path);
         }
-        return new PhysFsContainer(NativePointer.create(PhysFsWrapperNative.registerContainer(this.pointer.getPointerAddress(), path.toString())));
+        return new PhysFsContainer(NativePointer.create(PhysFsWrapperNative.registerContainer(this.pointer.getPointerAddress(), path.toString())), path);
     }
 
     @Override

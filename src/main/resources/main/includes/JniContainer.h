@@ -36,9 +36,7 @@ extern "C" {
 
 JNIEXPORT jlong JNICALL Java_jni_PhysFsContainerNative_openFile(JNIEnv* env, jobject o, jlong pointer, jstring jpath);
 
-JNIEXPORT jlong JNICALL Java_jni_PhysFsContainerNative_openFileToWrite(JNIEnv* env, jobject o, jlong pointer, jstring jpath);
-
-JNIEXPORT void JNICALL Java_jni_PhysFsContainerNative_setDirectoryWritable(JNIEnv* env, jobject o, jlong pointer);
+JNIEXPORT void JNICALL Java_jni_PhysFsContainerNative_reinit(JNIEnv* env, jobject o, jlong pointer);
 
 #ifdef __cplusplus
 }

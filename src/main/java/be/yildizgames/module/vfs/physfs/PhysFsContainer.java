@@ -29,14 +29,16 @@ package be.yildizgames.module.vfs.physfs;
 import be.yildizgames.common.jni.NativePointer;
 import be.yildizgames.module.vfs.VfsContainer;
 import be.yildizgames.module.vfs.VfsFile;
-import be.yildizgames.module.vfs.VfsFileEditable;
+import be.yildizgames.module.vfs.internal.BaseVfsContainer;
 import jni.PhysFsContainerNative;
+
+import java.nio.file.Path;
 
 /**
  * PhysFS implementation for a container.
  * @author Grégory Van den Borre
  */
-class PhysFsContainer implements VfsContainer {
+class PhysFsContainer extends BaseVfsContainer implements VfsContainer {
 
     /**
      * Pointer address of the native object.
@@ -47,8 +49,8 @@ class PhysFsContainer implements VfsContainer {
      * Create a new instance.
      * @param pointer Pointer to the native object.
      */
-    PhysFsContainer(final NativePointer pointer) {
-        super();
+    PhysFsContainer(final NativePointer pointer, Path path) {
+        super(path);
         this.pointer = pointer;
     }
 
@@ -59,14 +61,7 @@ class PhysFsContainer implements VfsContainer {
     }
 
     @Override
-    public  final VfsFileEditable openFileToWrite(final String name) {
-        this.setDirectoryWritable();
-        long address = PhysFsContainerNative.openFileToWrite(this.pointer.getPointerAddress(), name);
-        return new PhysFsFileEditable(NativePointer.create(address), this);
-    }
-
-    @Override
-    public final void setDirectoryWritable() {
-        PhysFsContainerNative.setDirectoryWritable(this.pointer.getPointerAddress());
+    protected void reinit() {
+        PhysFsContainerNative.reinit(this.pointer.getPointerAddress());
     }
 }

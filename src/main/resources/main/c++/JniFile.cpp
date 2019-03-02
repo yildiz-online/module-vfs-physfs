@@ -35,15 +35,3 @@ JNIEXPORT jint JNICALL Java_jni_PhysFsFileNative_getSize(JNIEnv* env, jobject o,
     return reinterpret_cast<jint>(file->getSize());
 }
 
-JNIEXPORT void JNICALL Java_jni_PhysFsFileNative_write(JNIEnv* env, jobject o, jlong pointer, jbyteArray array) {
-    yz::physfs::FileEditable* file = reinterpret_cast<yz::physfs::FileEditable*>(pointer);
-    try {
-        jsize len  = env->GetArrayLength(array);
-        unsigned char* result = new unsigned char[len];
-        env->GetByteArrayRegion(array, 0, len, reinterpret_cast<jbyte*>(result));
-        file->write(result);
-    } catch (std::exception& e) {
-        throwException(env, e.what());
-    }
-}
-

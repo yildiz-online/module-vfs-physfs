@@ -48,16 +48,19 @@ public:
         }
     }
 
+    void reinit() {
+        if(PHYSFS_unmount(this->path.c_str()) == 0) {
+            PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
+            throw std::runtime_error(PHYSFS_getErrorByCode(code));
+        }
+        if(PHYSFS_mount(this->path.c_str(), NULL, 1) == 0) {
+            PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
+            throw std::runtime_error(PHYSFS_getErrorByCode(code));
+        }
+    }
+
     File* openFile(const std::string& file) const {
         return new File(file);
-    }
-
-    FileEditable* openFileToWrite(const std::string& file) const {
-        return new FileEditable(file);
-    }
-
-    void setDirectoryWritable() {
-        PHYSFS_setWriteDir(this->path.c_str());
     }
 
 private:

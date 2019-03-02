@@ -26,6 +26,8 @@
 
 package be.yildizgames.module.vfs;
 
+import java.nio.file.Path;
+
 /**
  * A container is a virtual directory containing files and sub directories.
  * @author Grégory Van den Borre
@@ -39,15 +41,6 @@ public interface VfsContainer {
      */
     VfsFile openFile(String name);
 
-    /**
-     * Open a write only file.
-     * @param name File name.
-     * @return The file.
-     */
-    VfsFileEditable openFileToWrite(String name);
+    VfsFile addFile(Path path);
 
-    /**
-     * Allow a given directory to be writable, only one directory can be used at a time, invoking this method will replace the previous value.
-     */
-    void setDirectoryWritable();
 }
