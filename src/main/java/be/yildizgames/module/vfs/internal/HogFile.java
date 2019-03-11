@@ -23,6 +23,9 @@
  */
 package be.yildizgames.module.vfs.internal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
@@ -42,6 +45,8 @@ import java.nio.file.StandardOpenOption;
  * @author Grégory Van den Borre
  */
 class HogFile {
+
+    private final Logger logger = LoggerFactory.getLogger(HogFile.class);
 
     final void createContainer(Path file) throws IOException {
         Files.write(file, "DHF".getBytes());
@@ -70,7 +75,7 @@ class HogFile {
             Files.write(file, sizeByte , StandardOpenOption.APPEND);
             Files.write(file, Files.readAllBytes(toAdd), StandardOpenOption.APPEND);
         } catch (IOException e) {
-            e.printStackTrace();
+            this.logger.error("Error adding file {} to archive {}.", toAdd.toString(), file.toString(), e);
         }
     }
 
