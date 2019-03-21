@@ -56,6 +56,7 @@ class HogFile {
         try {
             int nameLength = toAdd.getFileName().toString().length();
             if (nameLength > 13) {
+                this.logger.warn("VFS HOG files are expected to be maximim 13 chars, {} is too long, cutting it to fit.", toAdd.getFileName().toString());
                 String name = toAdd.getFileName().toString().substring(nameLength - 14, nameLength - 1);
                 Files.write(file, name.getBytes(), StandardOpenOption.APPEND);
             } else {
