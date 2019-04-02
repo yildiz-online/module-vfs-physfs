@@ -26,15 +26,37 @@
 
 package jni;
 
+/**
+ * Interface to the JNI code.
+ * @author Grégory van den Borre
+ */
 public class PhysFsWrapperNative {
 
+    /**
+     * private constructor to prevent instantiations.
+     */
     private PhysFsWrapperNative() {
         super();
     }
 
+    /**
+     * Initialize the engine.
+     * @return The engine pointer address value.
+     */
     public static native long initialize();
 
+    /**
+     * Register a container.
+     * @param pointer Pointer of the engine.
+     * @param path Path where is the container.
+     * @return The container pointer address value.
+     */
     public static native long registerContainer(long pointer, String path);
 
+    /**
+     * Get a list of supported archive.
+     * @param pointer Pointer of the engine.
+     * @return A list of pointer of archive info.
+     */
     public static native long[] getSupportedArchiveType(long pointer);
 }

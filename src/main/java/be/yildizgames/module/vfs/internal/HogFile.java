@@ -46,6 +46,9 @@ import java.nio.file.StandardOpenOption;
  */
 class HogFile {
 
+    /**
+     * Associated logger.
+     */
     private final Logger logger = LoggerFactory.getLogger(HogFile.class);
 
     final void createContainer(Path file) throws IOException {
