@@ -22,7 +22,7 @@
  */
 
 #include "../includes/JniFile.h"
-#include "../includes/yz_physfs_.hpp"
+#include "../includes/yz_physfs_File.hpp"
 #include "../includes/JniUtil.h"
 
 /**
