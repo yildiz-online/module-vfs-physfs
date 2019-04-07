@@ -27,7 +27,7 @@
 #include <physfs.h>
 #include <string>
 #include <stdexcept>
-#include "File.hpp"
+#include "yz_physfs_File.hpp"
 
 namespace yz {
 
