@@ -22,7 +22,7 @@
  */
 
 #include "../includes/JniWrapper.h"
-#include "../includes/Wrapper.hpp"
+#include "../includes/yz_physfs_Wrapper.hpp"
 #include "../includes/JniUtil.h"
 
 /**

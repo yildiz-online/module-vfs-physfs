@@ -22,7 +22,7 @@
  */
 
 #include "../includes/JniContainer.h"
-#include "../includes/Container.hpp"
+#include "../includes/yz_physfs_Container.hpp"
 #include "../includes/JniUtil.h"
 
 /**

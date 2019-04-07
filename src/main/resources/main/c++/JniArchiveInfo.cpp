@@ -22,7 +22,7 @@
  */
 
 #include "../includes/JniArchiveInfo.h"
-#include "../includes/ArchiveTypeInfo.hpp"
+#include "../includes/yz_physfs_ArchiveTypeInfo.hpp"
 
 /**
 * @author Grégory Van den Borre
