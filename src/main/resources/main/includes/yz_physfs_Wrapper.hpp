@@ -29,8 +29,8 @@
 #include <iostream>
 #include <vector>
 #include <stdexcept>
-#include "Container.hpp"
-#include "ArchiveTypeInfo.hpp"
+#include "yz_physfs_Container.hpp"
+#include "yz_physfs_ArchiveTypeInfo.hpp"
 
 namespace yz {
 
