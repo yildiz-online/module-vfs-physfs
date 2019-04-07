@@ -68,11 +68,13 @@ public:
         return read;
     }
 
-    void seek(int position) const {
-        if(PHYSFS_seek(this->file, position) == 0) {
+    int seek(int position) const {
+        int result = PHYSFS_seek(this->file, position);
+        if(result == 0) {
             PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
             throw std::runtime_error(PHYSFS_getErrorByCode(code));
         }
+        return result;
     }
 
     int tell() const {
