@@ -23,7 +23,7 @@
  *
  *
  */
-module module.vfs.physfs {
+module be.yildizgames.module.vfs {
 
     requires be.yildizgames.common.jni;
     requires be.yildizgames.common.exception;
