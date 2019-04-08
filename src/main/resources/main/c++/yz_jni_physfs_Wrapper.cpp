@@ -21,31 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  */
 
-#include "../includes/JniContainer.h"
-#include "../includes/yz_physfs_Container.hpp"
+#include "../includes/yz_jni_physfs_Wrapper.h"
+#include "../includes/yz_physfs_Wrapper.hpp"
 #include "../includes/JniUtil.h"
 
 /**
 * @author Grégory Van den Borre
 */
 
-JNIEXPORT jlong JNICALL Java_jni_PhysFsContainerNative_openFile(JNIEnv* env, jobject o, jlong pointer, jstring jpath) {
-    yz::physfs::Container* container = reinterpret_cast<yz::physfs::Container*>(pointer);
+JNIEXPORT jlong JNICALL Java_jni_PhysFsWrapperNative_initialize(JNIEnv* env, jobject o) {
+    try {
+        return reinterpret_cast<jlong>(new yz::physfs::Wrapper());
+    } catch (std::exception& e) {
+        throwException(env, e.what());
+    }
+    return -1L;
+}
+
+JNIEXPORT jlong JNICALL Java_jni_PhysFsWrapperNative_registerContainer(JNIEnv* env, jobject o, jlong pointer, jstring jpath) {
+    yz::physfs::Wrapper* wrapper = reinterpret_cast<yz::physfs::Wrapper*>(pointer);
     JniStringWrapper path = JniStringWrapper(env, jpath);
     try {
-        return reinterpret_cast<jlong>(container->openFile(path.getValue()));
+        yz::physfs::Container* container = wrapper->registerContainer(path.getValue());
+        return reinterpret_cast<jlong>(container);
     } catch (std::exception& e) {
         throwException(env, e.what());
-        return -1L;
     }
+    return -1L;
 }
 
-JNIEXPORT void JNICALL Java_jni_PhysFsContainerNative_reinit(JNIEnv* env, jobject o, jlong pointer) {
-    yz::physfs::Container* container = reinterpret_cast<yz::physfs::Container*>(pointer);
+JNIEXPORT jlongArray JNICALL Java_jni_PhysFsWrapperNative_getSupportedArchiveType(JNIEnv* env, jobject o, jlong pointer) {
     try {
-        container->reinit();
+        yz::physfs::Wrapper* wrapper = reinterpret_cast<yz::physfs::Wrapper*>(pointer);
+        std::vector<yz::physfs::ArchiveTypeInfo*> list = wrapper->getSupportedArchiveType();
+        const int size = list.size();
+        jlong* buf = new jlong[size];
+        for (int i = 0; i < size; i++) {
+            buf[i] = reinterpret_cast<jlong>(list.at(i));
+        }
+        jlongArray result = env->NewLongArray(size);
+        env->SetLongArrayRegion(result, 0, size, buf);
+        return result;
     } catch (std::exception& e) {
         throwException(env, e.what());
     }
+    return env->NewLongArray(0);
 }
-

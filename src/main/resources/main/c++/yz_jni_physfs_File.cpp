@@ -21,21 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  */
 
-#include "../includes/JniArchiveInfo.h"
-#include "../includes/yz_physfs_ArchiveTypeInfo.hpp"
+#include "../includes/yz_jni_physfs_File.h"
+#include "../includes/yz_physfs_File.hpp"
+#include "../includes/JniUtil.h"
 
 /**
 * @author Grégory Van den Borre
 */
 
-JNIEXPORT jstring JNICALL Java_jni_PhysFsArchiveInfoNative_getExtension(JNIEnv* env, jobject o, jlong pointer) {
-    yz::physfs::ArchiveTypeInfo* info = reinterpret_cast<yz::physfs::ArchiveTypeInfo*>(pointer);
-    const std::string extension = info->getExtension();
-    return env->NewStringUTF(extension.c_str());
+JNIEXPORT jint JNICALL Java_jni_PhysFsFileNative_getSize(JNIEnv* env, jobject o, jlong pointer) {
+    yz::physfs::File* file = reinterpret_cast<yz::physfs::File*>(pointer);
+    return reinterpret_cast<jint>(file->getSize());
 }
 
-JNIEXPORT jstring JNICALL Java_jni_PhysFsArchiveInfoNative_getDescription(JNIEnv* env, jobject o, jlong pointer) {
-    yz::physfs::ArchiveTypeInfo* info = reinterpret_cast<yz::physfs::ArchiveTypeInfo*>(pointer);
-    const std::string description = info->getDescription();
-    return env->NewStringUTF(description.c_str());
-}

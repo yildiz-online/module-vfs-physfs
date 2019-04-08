@@ -21,27 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  */
 
-#include <physfs.h>
-#include "../includes/JniUtil.h"
+#include "../includes/yz_jni_physfs_ArchiveInfo.h"
+#include "../includes/yz_physfs_ArchiveTypeInfo.hpp"
 
 /**
-* Low level interface to expose all the functions.
 * @author Grégory Van den Borre
 */
 
-JNIEXPORT void JNICALL Java_jni_PhysFsNative_mount(JNIEnv* env, jobject o, jstring jpath) {
-    JniStringWrapper path = JniStringWrapper(env, jpath);
-    if(PHYSFS_mount(path.getValue().c_str(), NULL, 1) == 0) {
-        PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
-        throwException(env, PHYSFS_getErrorByCode(code));
-    }
+JNIEXPORT jstring JNICALL Java_jni_PhysFsArchiveInfoNative_getExtension(JNIEnv* env, jobject o, jlong pointer) {
+    yz::physfs::ArchiveTypeInfo* info = reinterpret_cast<yz::physfs::ArchiveTypeInfo*>(pointer);
+    const std::string extension = info->getExtension();
+    return env->NewStringUTF(extension.c_str());
 }
 
-JNIEXPORT void JNICALL Java_jni_PhysFsNative_setWriteDir(JNIEnv* env, jobject o, jstring jpath) {
-    JniStringWrapper path = JniStringWrapper(env, jpath);
-    if(PHYSFS_setWriteDir(path.getValue().c_str()) == 0) {
-        PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
-        throwException(env, PHYSFS_getErrorByCode(code));
-    }
+JNIEXPORT jstring JNICALL Java_jni_PhysFsArchiveInfoNative_getDescription(JNIEnv* env, jobject o, jlong pointer) {
+    yz::physfs::ArchiveTypeInfo* info = reinterpret_cast<yz::physfs::ArchiveTypeInfo*>(pointer);
+    const std::string description = info->getDescription();
+    return env->NewStringUTF(description.c_str());
 }
-

@@ -55,7 +55,7 @@ public:
         return list;
     }
 
-    Container* registerContainer(const std::string& path) const{
+    Container* registerContainer(const std::string& path) const {
         return new Container(path);
     }
 
@@ -71,6 +71,90 @@ public:
             }
         }
     }
+
+    std::vector<std::string> getSearchPath() const {
+        char** locList = PHYSFS_getSearchPath();
+        if (locList == 0) {
+            PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
+            throw std::runtime_error(PHYSFS_getErrorByCode(code));
+        }
+
+        std::vector<std::string> list;
+        for (char** l = locList; *l != 0; ++l) {
+            list.push_back(*l);
+        }
+
+        PHYSFS_freeList(locList);
+        return list;
+    }
+
+    std::string getRealDir(const std::string& file) const {
+        std::string dir = PHYSFS_getRealDir(file.c_str());
+        if (dir.empty()) {
+            throw std::runtime_error("PhysFS::getRealDir: File not found");
+        }
+        return dir;
+    }
+
+      /** Get a listing of files and directories inside the given directory. */
+    std::vector<std::string> enumerateFiles(const std::string& dir) const {
+        std::vector<std::string> list;
+        char** lst = PHYSFS_enumerateFiles(dir.c_str());
+        for (char** l = lst; *l != 0; ++l) {
+            list.push_back(*l);
+        }
+        PHYSFS_freeList(lst);
+        return list;
+    }
+
+    std::vector<std::string> getFileListing(const std::string& dir) const {
+        std::vector<std::string> tmpList = enumerateFiles(dir);
+        std::vector<std::string> list;
+        for (std::vector<std::string>::iterator it = tmpList.begin(); it != tmpList.end(); ++it) {
+            if (!isDirectory(*it)) {
+                list.push_back(*it);
+            }
+        }
+        return list;
+    }
+
+    std::vector<std::string> getDirListing(const std::string& dir) const {
+        std::vector<std::string> tmpList = enumerateFiles(dir);
+        std::vector<std::string> list;
+        for (std::vector<std::string>::iterator it = tmpList.begin(); it != tmpList.end(); ++it) {
+            if (isDirectory(*it)) {
+                list.push_back(*it);
+            }
+        }
+        return list;
+    }
+
+    /*std::streampos FileDevice::seek(std::streamoff off, std::ios_base::seekdir way)
+                                                            {
+                                                              PHYSFS_sint64 pos (off);
+                                                              if (way == std::ios_base::cur)
+                                                              {
+                                                                int cur = this->file->tell();
+                                                                pos = cur + off;
+                                                              }
+                                                              else if (way == std::ios_base::end)
+                                                              {
+                                                                int end = file->getSize();
+                                                                pos = end + off;
+                                                              }
+                                                              file->seek(pos);
+
+                                                              return std::streampos(pos);
+                                                            }*/
+
+
+
+    long getLastModTime(const std::string& file) const {
+        PHYSFS_Stat stat;
+        PHYSFS_stat(file.c_str(), &stat);
+        return stat.modtime;
+    }
+
 };
 }
 }
