@@ -154,6 +154,10 @@ public:
         PHYSFS_stat(file.c_str(), &stat);
         return stat.modtime;
     }
+    
+    bool isDirectory(const std::string& file) const {
+        return false;
+    }
 
 };
 }
