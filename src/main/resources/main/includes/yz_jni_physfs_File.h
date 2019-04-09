@@ -34,7 +34,7 @@
 extern "C" {
 #endif
 
-JNIEXPORT jint JNICALL Java_jni_PhysFsFileNative_getSize(JNIEnv* env, jobject o, jlong pointer);
+JNIEXPORT jlong JNICALL Java_jni_PhysFsFileNative_getSize(JNIEnv* env, jobject o, jlong pointer);
 
 #ifdef __cplusplus
 }
