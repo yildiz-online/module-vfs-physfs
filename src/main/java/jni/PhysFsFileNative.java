@@ -6,5 +6,5 @@ public class PhysFsFileNative {
         super();
     }
 
-    public static native int getSize(long pointer);
+    public static native long getSize(long pointer);
 }
