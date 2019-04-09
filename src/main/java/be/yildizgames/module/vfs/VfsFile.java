@@ -36,6 +36,6 @@ public interface VfsFile {
      * Provide the file size.
      * @return The file size.
      */
-    int getSize();
+    long getSize();
 
 }
