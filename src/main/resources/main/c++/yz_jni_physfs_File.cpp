@@ -29,7 +29,7 @@
 * @author Grégory Van den Borre
 */
 
-JNIEXPORT jint JNICALL Java_jni_PhysFsFileNative_getSize(JNIEnv* env, jobject o, jlong pointer) {
+JNIEXPORT jlong JNICALL Java_jni_PhysFsFileNative_getSize(JNIEnv* env, jobject o, jlong pointer) {
     yz::physfs::File* file = reinterpret_cast<yz::physfs::File*>(pointer);
     return reinterpret_cast<jlong>(file->getSize());
 }
