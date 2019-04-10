@@ -44,7 +44,7 @@ public:
         }
     }
 
-    long getSize() const {
+    PHYSFS_sint64 getSize() const {
         return PHYSFS_fileLength(this->file);
     }
 
