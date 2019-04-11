@@ -59,7 +59,7 @@ public:
         return PHYSFS_eof(this->file) != 0;
     }
 
-    int readBytes(void* data, int count){
+    int readBytes(void* data, int count) const {
         int read = PHYSFS_readBytes(this->file, data, count);
         if (read < count && !this->isEof()){
             PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
