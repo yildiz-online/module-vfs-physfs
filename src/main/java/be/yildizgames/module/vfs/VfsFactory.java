@@ -11,4 +11,8 @@ public class VfsFactory {
     public static Vfs getVfs(NativeResourceLoader loader) {
         return PhysFsWrapper.create(loader);
     }
+
+    public static Vfs getVfs() {
+        return PhysFsWrapper.create();
+    }
 }
