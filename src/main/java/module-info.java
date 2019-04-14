@@ -32,5 +32,6 @@ module be.yildizgames.module.vfs {
     requires slf4j.api;
 
     exports be.yildizgames.module.vfs;
+    exports be.yildizgames.module.vfs.dummy;
 
 }
