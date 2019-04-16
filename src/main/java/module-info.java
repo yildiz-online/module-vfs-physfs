@@ -23,15 +23,15 @@
  *
  *
  */
-module be.yildizgames.module.vfs {
+module be.yildizgames.module.vfs.physfs {
 
     requires be.yildizgames.common.jni;
     requires be.yildizgames.common.exception;
     requires be.yildizgames.common.libloader;
+    requires be.yildizgames.module.vfs;
 
     requires slf4j.api;
 
-    exports be.yildizgames.module.vfs;
-    exports be.yildizgames.module.vfs.dummy;
+    exports be.yildizgames.module.vfs.physfs;
 
 }

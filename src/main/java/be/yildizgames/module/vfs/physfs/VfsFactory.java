@@ -24,50 +24,29 @@
  *
  */
 
-package be.yildizgames.module.vfs.exception;
+package be.yildizgames.module.vfs.physfs;
 
-import be.yildizgames.common.exception.technical.TechnicalException;
-
-import java.io.IOException;
-import java.nio.file.Path;
+import be.yildizgames.common.libloader.NativeResourceLoader;
+import be.yildizgames.module.vfs.Vfs;
 
 /**
- * Technical exception for Virtual file systems.
  * @author Grégory Van den Borre
  */
-public class VfsException extends TechnicalException {
+public class VfsFactory {
 
-    /**
-     * Private constructor, New instance are from static methods.
-     * @param message Error message.
-     */
-    private VfsException(String message) {
-        super(message);
+    public static PhysFsWrapper INSTANCE;
+
+    public static PhysFsWrapper getVfs(NativeResourceLoader loader) {
+        if(INSTANCE == null) {
+            INSTANCE = PhysFsWrapper.create(loader);
+        }
+        return INSTANCE;
     }
 
-    /**
-     * Private constructor, New instance are from static methods.
-     * @param root Root exception.
-     */
-    private VfsException(Exception root) {
-        super(root);
-    }
-
-    /**
-     * Exception thrown when a VFS container does not exists.
-     * @param container Container name.
-     * @return The created exception.
-     */
-    public static VfsException containerNotExists(Path container) {
-        return new VfsException("The container " + container + " does not exists");
-    }
-
-    /**
-     * Exception thrown when an IO is thrown.
-     * @param e Root io exception.
-     * @return The created exception.
-     */
-    public static VfsException io(IOException e) {
-        return new VfsException(e);
+    public static PhysFsWrapper getVfs() {
+        if(INSTANCE == null) {
+            INSTANCE = PhysFsWrapper.create();
+        }
+        return INSTANCE;
     }
 }

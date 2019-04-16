@@ -24,30 +24,48 @@
  *
  */
 
-package be.yildizgames.module.vfs;
+package be.yildizgames.module.vfs.physfs.exception;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
 
 /**
- * A VFS (virtual file system) provide a layer of abstraction on top on a file system, or an archive file.
+ * Technical exception for Virtual file systems.
  * @author Grégory Van den Borre
  */
-public interface Vfs {
+public class VfsException extends IllegalStateException {
 
     /**
-     * Register a container to be used with the VFS.
-     * @param path Container path.
-     * @return The created vfs container.
+     * Private constructor, New instance are from static methods.
+     * @param message Error message.
      */
-    VfsContainer registerContainer(Path path);
-
-    VfsContainer createContainer(Path path, VfsArchiveFormat format) throws IOException;
+    private VfsException(String message) {
+        super(message);
+    }
 
     /**
-     * Provide the list of all supported archive type information.
-     * @return The list.
+     * Private constructor, New instance are from static methods.
+     * @param root Root exception.
      */
-    List<VfsArchiveInfo> getSupportedArchiveInfo();
+    private VfsException(Exception root) {
+        super(root);
+    }
+
+    /**
+     * Exception thrown when a VFS container does not exists.
+     * @param container Container name.
+     * @return The created exception.
+     */
+    public static VfsException containerNotExists(Path container) {
+        return new VfsException("The container " + container + " does not exists");
+    }
+
+    /**
+     * Exception thrown when an IO is thrown.
+     * @param e Root io exception.
+     * @return The created exception.
+     */
+    public static VfsException io(IOException e) {
+        return new VfsException(e);
+    }
 }

@@ -27,14 +27,14 @@
 package be.yildizgames.module.vfs.physfs;
 
 import be.yildizgames.common.exception.implementation.ImplementationException;
+import be.yildizgames.common.jni.Native;
 import be.yildizgames.common.jni.NativePointer;
 import be.yildizgames.common.libloader.GlobalNativeResourceLoader;
 import be.yildizgames.common.libloader.NativeResourceLoader;
 import be.yildizgames.module.vfs.Vfs;
 import be.yildizgames.module.vfs.VfsArchiveInfo;
 import be.yildizgames.module.vfs.VfsContainer;
-import be.yildizgames.module.vfs.exception.VfsException;
-import be.yildizgames.module.vfs.internal.BaseVfs;
+import be.yildizgames.module.vfs.physfs.exception.VfsException;
 import jni.PhysFsWrapperNative;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +49,7 @@ import java.util.stream.Collectors;
  * PhysFs implementation for the VFS.
  * @author Grégory Van den Borre
  */
-public class PhysFsWrapper extends BaseVfs implements Vfs {
+public class PhysFsWrapper implements Vfs, Native {
 
     /**
      * Pointer address of the native object.
@@ -75,7 +75,7 @@ public class PhysFsWrapper extends BaseVfs implements Vfs {
      * Create a new instance, the native resources will be loaded from the classpath jars.
      * @return The created instance.
      */
-    public static Vfs create() {
+    static PhysFsWrapper create() {
         return create(GlobalNativeResourceLoader.getInstance().getLoader());
     }
 
@@ -84,7 +84,7 @@ public class PhysFsWrapper extends BaseVfs implements Vfs {
      * @param loader Loader to load the native resources.
      * @return The created instance.
      */
-    public static Vfs create(final NativeResourceLoader loader) {
+    static PhysFsWrapper create(final NativeResourceLoader loader) {
         return new PhysFsWrapper(loader);
     }
 
@@ -94,7 +94,7 @@ public class PhysFsWrapper extends BaseVfs implements Vfs {
         if(Files.notExists(path)) {
             throw VfsException.containerNotExists(path);
         }
-        return new PhysFsContainer(NativePointer.create(PhysFsWrapperNative.registerContainer(this.pointer.getPointerAddress(), path.toString())), path);
+        return new PhysFsContainer(path, NativePointer.create(PhysFsWrapperNative.registerContainer(this.pointer.getPointerAddress(), path.toString())));
     }
 
     @Override
@@ -103,5 +103,15 @@ public class PhysFsWrapper extends BaseVfs implements Vfs {
                 .mapToObj(NativePointer::create)
                 .map(PhysFsArchiveInfo::new)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public final NativePointer getPointer() {
+        return this.pointer;
+    }
+
+    @Override
+    public void delete() {
+
     }
 }

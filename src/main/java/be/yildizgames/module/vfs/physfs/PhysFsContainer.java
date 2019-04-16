@@ -29,7 +29,6 @@ package be.yildizgames.module.vfs.physfs;
 import be.yildizgames.common.jni.NativePointer;
 import be.yildizgames.module.vfs.VfsContainer;
 import be.yildizgames.module.vfs.VfsFile;
-import be.yildizgames.module.vfs.internal.BaseVfsContainer;
 import jni.PhysFsContainerNative;
 
 import java.nio.file.Path;
@@ -38,20 +37,23 @@ import java.nio.file.Path;
  * PhysFS implementation for a container.
  * @author Grégory Van den Borre
  */
-class PhysFsContainer extends BaseVfsContainer implements VfsContainer {
+class PhysFsContainer implements VfsContainer {
 
     /**
      * Pointer address of the native object.
      */
     private final NativePointer pointer;
 
+    private final Path path;
+
     /**
      * Create a new instance.
      * @param pointer Pointer to the native object.
      */
-    PhysFsContainer(final NativePointer pointer, Path path) {
-        super(path);
+    PhysFsContainer(Path path, final NativePointer pointer) {
+        super();
         this.pointer = pointer;
+        this.path = path;
     }
 
     @Override
@@ -61,7 +63,12 @@ class PhysFsContainer extends BaseVfsContainer implements VfsContainer {
     }
 
     @Override
-    protected void reinit() {
+    public void reinit() {
         PhysFsContainerNative.reinit(this.pointer.getPointerAddress());
+    }
+
+    @Override
+    public Path getPath() {
+        return this.path;
     }
 }
