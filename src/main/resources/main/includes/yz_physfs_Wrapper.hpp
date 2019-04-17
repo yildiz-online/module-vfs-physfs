@@ -96,17 +96,6 @@ public:
         return dir;
     }
 
-      /** Get a listing of files and directories inside the given directory. */
-    std::vector<std::string> enumerateFiles(const std::string& dir) const {
-        std::vector<std::string> list;
-        char** lst = PHYSFS_enumerateFiles(dir.c_str());
-        for (char** l = lst; *l != 0; ++l) {
-            list.push_back(*l);
-        }
-        PHYSFS_freeList(lst);
-        return list;
-    }
-
     std::vector<std::string> getFileListing(const std::string& dir) const {
         std::vector<std::string> tmpList = enumerateFiles(dir);
         std::vector<std::string> list;
@@ -153,10 +142,6 @@ public:
         PHYSFS_Stat stat;
         PHYSFS_stat(file.c_str(), &stat);
         return stat.modtime;
-    }
-    
-    bool isDirectory(const std::string& file) const {
-        return false;
     }
     
     bool exists(const std::string& file) const {

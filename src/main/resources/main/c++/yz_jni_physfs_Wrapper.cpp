@@ -67,3 +67,17 @@ JNIEXPORT jlongArray JNICALL Java_jni_PhysFsWrapperNative_getSupportedArchiveTyp
     }
     return env->NewLongArray(0);
 }
+
+JNIEXPORT std::vector<std::string> JNICALL enumerateFiles(const std::string& dir) const {
+    std::vector<std::string> list;
+    char** lst = PHYSFS_enumerateFiles(dir.c_str());
+    for (char** l = lst; *l != 0; ++l) {
+        list.push_back(*l);
+    }
+    PHYSFS_freeList(lst);
+    return list;
+}
+
+JNIEXPORT bool JNICALL isDirectory(const std::string& file) const {
+    return false;
+}
