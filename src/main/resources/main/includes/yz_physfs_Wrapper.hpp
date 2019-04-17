@@ -118,6 +118,16 @@ public:
         return list;
     }
 
+    std::vector<std::string> enumerateFiles(const std::string& dir) const {
+        std::vector<std::string> list;
+        char** lst = PHYSFS_enumerateFiles(dir.c_str());
+        for (char** l = lst; *l != 0; ++l) {
+            list.push_back(*l);
+        }
+        PHYSFS_freeList(lst);
+        return list;
+    }
+
     /*std::streampos FileDevice::seek(std::streamoff off, std::ios_base::seekdir way)
                                                             {
                                                               PHYSFS_sint64 pos (off);
