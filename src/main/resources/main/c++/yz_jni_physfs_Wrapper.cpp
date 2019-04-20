@@ -74,17 +74,15 @@ JNIEXPORT jobjectArray JNICALL Java_jni_PhysFsWrapperNative_enumerateFiles(JNIEn
         JniStringWrapper dir = JniStringWrapper(env, jdir);
         std::vector<std::string> list = wrapper->enumerateFiles(dir.getValue().c_str());
         const int size = list.size();
-        jstring* buf = new jstring[size];
+        jobjectArray result = env->NewObjectArray(size, env->FindClass("java/lang/String"), env->NewStringUTF(""));
         for (int i = 0; i < size; i++) {
-            buf[i] = env->NewStringUTF(list[i].c_str());
+            env->SetObjectArrayElement(result, i, env->NewStringUTF(list[i].c_str()));
         }
-        jobjectArray result = env->NewObjectArray(size, env->FindClass("java/lang/String"), 0);
-        env->SetObjectArrayRegion(result, 0, size, buf);
         return result;
     } catch (std::exception& e) {
         throwException(env, e.what());
     }
-    return env->NewObjectArray(0);
+    return env->NewObjectArray(1, env->FindClass("java/lang/String"), env->NewStringUTF(""));
 }
 
 JNIEXPORT std::vector<std::string> JNICALL enumerateFiles(const std::string& dir)  {
