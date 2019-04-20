@@ -105,6 +105,10 @@ public class PhysFsWrapper implements Vfs, Native {
                 .collect(Collectors.toList());
     }
 
+    public final List<String> enumerateFiles(String dir) {
+        return Arrays.asList(PhysFsWrapperNative.enumerateFiles(this.pointer.getPointerAddress(), dir));
+    }
+
     @Override
     public final NativePointer getPointer() {
         return this.pointer;

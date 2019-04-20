@@ -157,7 +157,7 @@ public:
     bool exists(const std::string& file) const {
         return PHYSFS_exists(file.c_str()) != 0;    
     }
-    
+
     bool isDirectory(const std::string& file) const {
         return false;
     }

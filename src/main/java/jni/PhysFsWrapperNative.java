@@ -59,4 +59,6 @@ public class PhysFsWrapperNative {
      * @return A list of pointer of archive info.
      */
     public static native long[] getSupportedArchiveType(long pointer);
+
+    public static native String[] enumerateFiles(long pointer, String dir);
 }

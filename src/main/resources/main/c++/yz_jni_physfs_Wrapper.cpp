@@ -68,6 +68,25 @@ JNIEXPORT jlongArray JNICALL Java_jni_PhysFsWrapperNative_getSupportedArchiveTyp
     return env->NewLongArray(0);
 }
 
+JNIEXPORT jstringArray JNICALL Java_jni_PhysFsWrapperNative_enumerateFiles(JNIEnv* env, jobject o, jlong pointer, jstring jdir)  {
+    try {
+        yz::physfs::Wrapper* wrapper = reinterpret_cast<yz::physfs::Wrapper*>(pointer);
+        JniStringWrapper dir = JniStringWrapper(env, jdir);
+        std::vector<std::string> list = wrapper->enumerateFiles(dir.c_str());
+        const int size = list.size();
+        jstring* buf = new jstring[size];
+        for (int i = 0; i < size; i++) {
+            buf[i] = env->NewStringUTF(list[i].c_str());
+        }
+        jstringArray result = env->NewStringArray(size);
+            env->SetStringArrayRegion(result, 0, size, buf);
+            return result;
+        } catch (std::exception& e) {
+            throwException(env, e.what());
+        }
+        return env->NewStringArray(0);
+}
+
 JNIEXPORT std::vector<std::string> JNICALL enumerateFiles(const std::string& dir)  {
     std::vector<std::string> list;
     char** lst = PHYSFS_enumerateFiles(dir.c_str());

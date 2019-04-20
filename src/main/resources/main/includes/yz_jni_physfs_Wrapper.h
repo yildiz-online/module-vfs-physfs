@@ -40,6 +40,8 @@ JNIEXPORT jlong JNICALL Java_jni_PhysFsWrapperNative_registerContainer(JNIEnv* e
 
 JNIEXPORT jlongArray JNICALL Java_jni_PhysFsWrapperNative_getSupportedArchiveType(JNIEnv* env, jobject o, jlong pointer);
 
+JNIEXPORT jstringArray JNICALL Java_jni_PhysFsWrapperNative_enumerateFiles(JNIEnv* env, jobject o, jlong pointer, jstring jdir)
+
 #ifdef __cplusplus
 }
 #endif
