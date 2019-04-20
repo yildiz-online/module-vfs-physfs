@@ -84,17 +84,3 @@ JNIEXPORT jobjectArray JNICALL Java_jni_PhysFsWrapperNative_enumerateFiles(JNIEn
     }
     return env->NewObjectArray(1, env->FindClass("java/lang/String"), env->NewStringUTF(""));
 }
-
-JNIEXPORT std::vector<std::string> JNICALL enumerateFiles(const std::string& dir)  {
-    std::vector<std::string> list;
-    char** lst = PHYSFS_enumerateFiles(dir.c_str());
-    for (char** l = lst; *l != 0; ++l) {
-        list.push_back(*l);
-    }
-    PHYSFS_freeList(lst);
-    return list;
-}
-
-JNIEXPORT bool JNICALL isDirectory(const std::string& file) {
-    return false;
-}
