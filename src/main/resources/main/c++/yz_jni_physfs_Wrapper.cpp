@@ -78,8 +78,8 @@ JNIEXPORT jobjectArray JNICALL Java_jni_PhysFsWrapperNative_enumerateFiles(JNIEn
         for (int i = 0; i < size; i++) {
             buf[i] = env->NewStringUTF(list[i].c_str());
         }
-        jobjectArray result = env->NewObjectArray(env, size, env->FindClass(env,"java/lang/String"),0);
-        env->SetObjectArrayRegion(env, result, 0, size, buf);
+        jobjectArray result = env->NewObjectArray(size, env->FindClass("java/lang/String"), 0);
+        env->SetObjectArrayRegion(result, 0, size, buf);
         return result;
     } catch (std::exception& e) {
         throwException(env, e.what());
