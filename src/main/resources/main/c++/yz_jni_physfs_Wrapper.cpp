@@ -72,7 +72,7 @@ JNIEXPORT jobjectArray JNICALL Java_jni_PhysFsWrapperNative_enumerateFiles(JNIEn
     try {
         yz::physfs::Wrapper* wrapper = reinterpret_cast<yz::physfs::Wrapper*>(pointer);
         JniStringWrapper dir = JniStringWrapper(env, jdir);
-        std::vector<std::string> list = wrapper->enumerateFiles(dir.c_str());
+        std::vector<std::string> list = wrapper->enumerateFiles(dir.getValue().c_str());
         const int size = list.size();
         jstring* buf = new jstring[size];
         for (int i = 0; i < size; i++) {
