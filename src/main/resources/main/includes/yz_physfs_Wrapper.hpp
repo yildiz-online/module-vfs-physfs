@@ -37,7 +37,7 @@ namespace yz {
 
 namespace physfs {
 
-_YZExport class Wrapper {
+class _YZExport Wrapper {
 
 public:
 
