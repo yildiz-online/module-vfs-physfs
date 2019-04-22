@@ -31,7 +31,7 @@
 #include <stdexcept>
 #include "yz_physfs_Container.hpp"
 #include "yz_physfs_ArchiveTypeInfo.hpp"
-#include "yz_system_platform.hpp"
+#include "yz_physfs_system_platform.hpp"
 
 namespace yz {
 
