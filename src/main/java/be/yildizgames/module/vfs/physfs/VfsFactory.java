@@ -27,26 +27,17 @@
 package be.yildizgames.module.vfs.physfs;
 
 import be.yildizgames.common.libloader.NativeResourceLoader;
-import be.yildizgames.module.vfs.Vfs;
 
 /**
  * @author Grégory Van den Borre
  */
 public class VfsFactory {
 
-    public static PhysFsWrapper INSTANCE;
-
     public static PhysFsWrapper getVfs(NativeResourceLoader loader) {
-        if(INSTANCE == null) {
-            INSTANCE = PhysFsWrapper.create(loader);
-        }
-        return INSTANCE;
+        return PhysFsWrapper.create(loader);
     }
 
     public static PhysFsWrapper getVfs() {
-        if(INSTANCE == null) {
-            INSTANCE = PhysFsWrapper.create();
-        }
-        return INSTANCE;
+        return PhysFsWrapper.create();
     }
 }
