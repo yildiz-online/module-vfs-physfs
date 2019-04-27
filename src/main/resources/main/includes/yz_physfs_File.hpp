@@ -37,8 +37,12 @@ class File {
 public:
 
     File(const std::string& path) {
+        std::cout << "open file" << std::endl
+        std::cout << "opening:" << path.c_str() << std::endl;
         this->file = PHYSFS_openRead(path.c_str());
+        std::cout << "opened" << std::endl;
         if(!this->file) {
+            std::cout << "error" << std::endl;
             PHYSFS_ErrorCode code = PHYSFS_getLastErrorCode();
             throw std::runtime_error(PHYSFS_getErrorByCode(code));
         }
