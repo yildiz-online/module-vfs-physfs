@@ -38,7 +38,7 @@ class File {
 public:
 
     File(const std::string& path) {
-        std::cout << "open file" << std::endl
+        std::cout << "open file" << std::endl;
         std::cout << "opening:" << path.c_str() << std::endl;
         this->file = PHYSFS_openRead(path.c_str());
         std::cout << "opened" << std::endl;
