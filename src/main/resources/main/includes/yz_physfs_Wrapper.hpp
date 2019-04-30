@@ -42,6 +42,7 @@ class _YZExport Wrapper {
 public:
 
     Wrapper() {
+        std::cout << "Initializing physFS status: " <<  PHYSFS_isInit() << std::endl;
         if(PHYSFS_isInit() == 0) {
             PHYSFS_init(NULL);
         }
