@@ -64,11 +64,11 @@ public class PhysFsWrapper implements Vfs, Native {
         super();
         ImplementationException.throwForNull(loader);
         Logger logger = LoggerFactory.getLogger(PhysFsWrapper.class);
-        logger.info("Initializing PhysFs vfs component...");
+        logger.info("Initializing PhysFs virtual file system component...");
         loader.loadBaseLibrary();
         loader.loadLibrary("libyildizphysfs");
         this.pointer = NativePointer.create(PhysFsWrapperNative.initialize());
-        logger.info("PhysFs vfs component initialized.");
+        logger.info("PhysFs virtual file system component initialized.");
     }
 
     /**

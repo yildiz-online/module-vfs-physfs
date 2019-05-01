@@ -46,6 +46,7 @@ public:
         if(PHYSFS_isInit() == 0) {
             PHYSFS_init(NULL);
         }
+        std::cout << "Initialized physFS status: " <<  PHYSFS_isInit() << std::endl;
     }
 
     std::vector<yz::physfs::ArchiveTypeInfo*> getSupportedArchiveType() const {
