@@ -26,7 +26,6 @@
 
 #include <physfs.h>
 #include <string>
-#include <iostream>
 #include <vector>
 #include <stdexcept>
 #include "yz_physfs_Container.hpp"
@@ -42,11 +41,9 @@ class _YZExport Wrapper {
 public:
 
     Wrapper() {
-        std::cout << "Initializing physFS status: " <<  PHYSFS_isInit() << std::endl;
         if(PHYSFS_isInit() == 0) {
             PHYSFS_init(NULL);
         }
-        std::cout << "Initialized physFS status: " <<  PHYSFS_isInit() << std::endl;
     }
 
     std::vector<yz::physfs::ArchiveTypeInfo*> getSupportedArchiveType() const {
@@ -130,26 +127,6 @@ public:
         PHYSFS_freeList(lst);
         return list;
     }
-
-    /*std::streampos FileDevice::seek(std::streamoff off, std::ios_base::seekdir way)
-                                                            {
-                                                              PHYSFS_sint64 pos (off);
-                                                              if (way == std::ios_base::cur)
-                                                              {
-                                                                int cur = this->file->tell();
-                                                                pos = cur + off;
-                                                              }
-                                                              else if (way == std::ios_base::end)
-                                                              {
-                                                                int end = file->getSize();
-                                                                pos = end + off;
-                                                              }
-                                                              file->seek(pos);
-
-                                                              return std::streampos(pos);
-                                                            }*/
-
-
 
     long getLastModTime(const std::string& file) const {
         PHYSFS_Stat stat;
