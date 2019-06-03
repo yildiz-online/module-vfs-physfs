@@ -30,8 +30,6 @@ module be.yildizgames.module.vfs.physfs {
     requires be.yildizgames.common.libloader;
     requires be.yildizgames.module.vfs;
 
-    requires slf4j.api;
-
     exports be.yildizgames.module.vfs.physfs;
 
 }

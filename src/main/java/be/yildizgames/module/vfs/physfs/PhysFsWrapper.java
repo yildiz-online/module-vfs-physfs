@@ -36,8 +36,6 @@ import be.yildizgames.module.vfs.VfsArchiveInfo;
 import be.yildizgames.module.vfs.VfsContainer;
 import be.yildizgames.module.vfs.physfs.exception.VfsException;
 import jni.PhysFsWrapperNative;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -63,12 +61,12 @@ public class PhysFsWrapper implements Vfs, Native {
     private PhysFsWrapper(final NativeResourceLoader loader) {
         super();
         ImplementationException.throwForNull(loader);
-        Logger logger = LoggerFactory.getLogger(PhysFsWrapper.class);
-        logger.info("Initializing PhysFs virtual file system component...");
+        System.Logger logger = System.getLogger(PhysFsWrapper.class.getName());
+        logger.log(System.Logger.Level.INFO,"Initializing PhysFs virtual file system component...");
         loader.loadBaseLibrary();
         loader.loadLibrary("libyildizphysfs");
         this.pointer = NativePointer.create(PhysFsWrapperNative.initialize());
-        logger.info("PhysFs virtual file system component initialized.");
+        logger.log(System.Logger.Level.INFO,"Initializing PhysFs virtual file system component complete.");
     }
 
     /**
