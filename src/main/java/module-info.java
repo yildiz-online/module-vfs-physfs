@@ -26,7 +26,6 @@
 module be.yildizgames.module.vfs.physfs {
 
     requires be.yildizgames.common.jni;
-    requires be.yildizgames.common.exception;
     requires be.yildizgames.common.libloader;
     requires be.yildizgames.module.vfs;
 
