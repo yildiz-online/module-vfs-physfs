@@ -26,7 +26,6 @@
 
 package be.yildizgames.module.vfs.physfs;
 
-import be.yildizgames.common.exception.implementation.ImplementationException;
 import be.yildizgames.common.jni.Native;
 import be.yildizgames.common.jni.NativePointer;
 import be.yildizgames.common.libloader.GlobalNativeResourceLoader;
@@ -41,6 +40,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -60,7 +60,6 @@ public class PhysFsWrapper implements Vfs, Native {
      */
     private PhysFsWrapper(final NativeResourceLoader loader) {
         super();
-        ImplementationException.throwForNull(loader);
         System.Logger logger = System.getLogger(PhysFsWrapper.class.getName());
         logger.log(System.Logger.Level.INFO,"Initializing PhysFs virtual file system component...");
         loader.loadBaseLibrary();
@@ -88,7 +87,7 @@ public class PhysFsWrapper implements Vfs, Native {
 
     @Override
     public final VfsContainer registerContainer(final Path path) {
-        ImplementationException.throwForNull(path);
+        Objects.requireNonNull(path);
         if(Files.notExists(path)) {
             throw VfsException.containerNotExists(path);
         }
