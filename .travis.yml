@@ -18,8 +18,7 @@ before_install:
   - docker pull moussavdb/build-java
 
 script:
-  - chmod +x deploy-maven-central.sh
-  - docker run -v $PWD:/src -v $HOME/.m2:/root/.m2 -e BRANCH=$TRAVIS_BRANCH -e VAULT_TOKEN=$VAULT_TOKEN moussavdb/build-java ./deploy-maven-central.sh
+  - docker run -v $PWD:/src -v $HOME/.m2:/root/.m2 -e BRANCH=$TRAVIS_BRANCH -e VAULT_TOKEN=$VAULT_TOKEN moussavdb/build-java
 
 after_success:
   - npm install travis-ci
