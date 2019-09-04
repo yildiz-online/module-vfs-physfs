@@ -1,3 +1,5 @@
+import be.yildizgames.module.vfs.physfs.PhysFsVfsEngineProvider;
+
 /*
  *
  * This file is part of the Yildiz-Engine project, licenced under the MIT License  (MIT)
@@ -29,6 +31,6 @@ module be.yildizgames.module.vfs.physfs {
     requires be.yildizgames.common.libloader;
     requires be.yildizgames.module.vfs;
 
-    exports be.yildizgames.module.vfs.physfs;
+    provides be.yildizgames.module.vfs.VfsEngineProvider with PhysFsVfsEngineProvider;
 
 }
