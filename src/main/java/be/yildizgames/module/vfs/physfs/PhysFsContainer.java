@@ -26,18 +26,20 @@
 
 package be.yildizgames.module.vfs.physfs;
 
+import be.yildizgames.common.jni.Native;
 import be.yildizgames.common.jni.NativePointer;
 import be.yildizgames.module.vfs.VfsContainer;
 import be.yildizgames.module.vfs.VfsFile;
-import jni.PhysFsContainerNative;
+import be.yildizgames.module.vfs.physfs.internal.PhysFsContainerImplementation;
 
 import java.nio.file.Path;
+import java.util.Objects;
 
 /**
  * PhysFS implementation for a container.
  * @author Grégory Van den Borre
  */
-class PhysFsContainer implements VfsContainer {
+class PhysFsContainer implements VfsContainer, Native {
 
     /**
      * Pointer address of the native object.
@@ -46,29 +48,42 @@ class PhysFsContainer implements VfsContainer {
 
     private final Path path;
 
+    private final PhysFsContainerImplementation containerImplementation;
+
     /**
      * Create a new instance.
      * @param pointer Pointer to the native object.
      */
-    PhysFsContainer(Path path, final NativePointer pointer) {
+    PhysFsContainer(final PhysFsContainerImplementation implementation, Path path, final NativePointer pointer) {
         super();
-        this.pointer = pointer;
-        this.path = path;
+        this.pointer = Objects.requireNonNull(pointer);
+        this.path = Objects.requireNonNull(path);
+        this.containerImplementation = implementation;
     }
 
     @Override
     public final VfsFile openFile(final String name) {
-        long address = PhysFsContainerNative.openFile(this.pointer.getPointerAddress(), name);
-        return new PhysFsFile(NativePointer.create(address));
+        long address = this.containerImplementation.openFile(this.pointer.getPointerAddress(), Objects.requireNonNull(name));
+        return new PhysFsFile(containerImplementation.getFileImplementation(), NativePointer.create(address));
     }
 
     @Override
     public void reinit() {
-        PhysFsContainerNative.reinit(this.pointer.getPointerAddress());
+        this.containerImplementation.reinit(this.pointer.getPointerAddress());
     }
 
     @Override
     public Path getPath() {
         return this.path;
+    }
+
+    @Override
+    public NativePointer getPointer() {
+        return this.pointer;
+    }
+
+    @Override
+    public void delete() {
+        //FIXME implements
     }
 }

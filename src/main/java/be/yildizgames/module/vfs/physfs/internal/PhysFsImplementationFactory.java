@@ -23,43 +23,31 @@
  *
  *
  */
+package be.yildizgames.module.vfs.physfs.internal;
 
-package be.yildizgames.module.vfs.physfs;
-
-import be.yildizgames.common.jni.NativePointer;
-import be.yildizgames.module.vfs.VfsArchiveInfo;
-import be.yildizgames.module.vfs.physfs.internal.PhysFsArchiveInfoImplementation;
+import be.yildizgames.module.vfs.physfs.internal.dummy.PhysFsWrapperDummy;
+import jni.PhysFsWrapperNative;
 
 /**
- * PhysFS implementation for an archive info.
+ * Different implementation to reach native code are possible, this allow to create unit tests without invoking the native code.
+ * As the native code is not yet compiled, it would not be possible to run unit tests without this.
+ *
  * @author Grégory Van den Borre
  */
-class PhysFsArchiveInfo implements VfsArchiveInfo {
+public class PhysFsImplementationFactory {
 
     /**
-     * Pointer address of the native object.
+     * Once set to true, the test implementation (not using real native code) will be used.
+     * This is package protected and must only be invoked by unit tests.
+     * Complete tests (using real native code) can be done in their respective sub projects(win64, linux64,...)
      */
-    private final NativePointer pointer;
+    static boolean test = false;
 
-    private final PhysFsArchiveInfoImplementation implementation;
-
-    /**
-     * Create a new instance.
-     * @param pointer Pointer to the native object.
-     */
-    PhysFsArchiveInfo(final PhysFsArchiveInfoImplementation implementation, final NativePointer pointer) {
-        super();
-        this.pointer = pointer;
-        this.implementation = implementation;
+    public static PhysFsWrapperImplementation getImplementation() {
+        if(test) {
+            return new PhysFsWrapperDummy();
+        }
+        return new PhysFsWrapperNative();
     }
 
-    @Override
-    public final String getExtension() {
-        return this.implementation.getExtension(this.pointer.getPointerAddress());
-    }
-
-    @Override
-    public final String getDescription() {
-        return this.implementation.getDescription(this.pointer.getPointerAddress());
-    }
 }

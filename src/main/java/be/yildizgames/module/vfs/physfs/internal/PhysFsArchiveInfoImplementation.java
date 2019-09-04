@@ -23,43 +23,10 @@
  *
  *
  */
+package be.yildizgames.module.vfs.physfs.internal;
 
-package be.yildizgames.module.vfs.physfs;
+public interface PhysFsArchiveInfoImplementation {
+    String getExtension(long pointer);
 
-import be.yildizgames.common.jni.NativePointer;
-import be.yildizgames.module.vfs.VfsArchiveInfo;
-import be.yildizgames.module.vfs.physfs.internal.PhysFsArchiveInfoImplementation;
-
-/**
- * PhysFS implementation for an archive info.
- * @author Grégory Van den Borre
- */
-class PhysFsArchiveInfo implements VfsArchiveInfo {
-
-    /**
-     * Pointer address of the native object.
-     */
-    private final NativePointer pointer;
-
-    private final PhysFsArchiveInfoImplementation implementation;
-
-    /**
-     * Create a new instance.
-     * @param pointer Pointer to the native object.
-     */
-    PhysFsArchiveInfo(final PhysFsArchiveInfoImplementation implementation, final NativePointer pointer) {
-        super();
-        this.pointer = pointer;
-        this.implementation = implementation;
-    }
-
-    @Override
-    public final String getExtension() {
-        return this.implementation.getExtension(this.pointer.getPointerAddress());
-    }
-
-    @Override
-    public final String getDescription() {
-        return this.implementation.getDescription(this.pointer.getPointerAddress());
-    }
+    String getDescription(long pointer);
 }

@@ -23,43 +23,38 @@
  *
  *
  */
+package be.yildizgames.module.vfs.physfs.internal;
 
-package be.yildizgames.module.vfs.physfs;
+import be.yildizgames.common.libloader.NativeResourceLoader;
 
-import be.yildizgames.common.jni.NativePointer;
-import be.yildizgames.module.vfs.VfsArchiveInfo;
-import be.yildizgames.module.vfs.physfs.internal.PhysFsArchiveInfoImplementation;
-
-/**
- * PhysFS implementation for an archive info.
- * @author Grégory Van den Borre
- */
-class PhysFsArchiveInfo implements VfsArchiveInfo {
+public interface PhysFsWrapperImplementation {
 
     /**
-     * Pointer address of the native object.
+     * Initialize the engine.
+     * @return The engine pointer address value.
      */
-    private final NativePointer pointer;
-
-    private final PhysFsArchiveInfoImplementation implementation;
+    long initialize();
 
     /**
-     * Create a new instance.
-     * @param pointer Pointer to the native object.
+     * Register a container.
+     * @param pointer Pointer of the engine.
+     * @param path Path where is the container.
+     * @return The container pointer address value.
      */
-    PhysFsArchiveInfo(final PhysFsArchiveInfoImplementation implementation, final NativePointer pointer) {
-        super();
-        this.pointer = pointer;
-        this.implementation = implementation;
-    }
+    long registerContainer(long pointer, String path);
 
-    @Override
-    public final String getExtension() {
-        return this.implementation.getExtension(this.pointer.getPointerAddress());
-    }
+    /**
+     * Get a list of supported archive.
+     * @param pointer Pointer of the engine.
+     * @return A list of pointer of archive info.
+     */
+    long[] getSupportedArchiveType(long pointer);
 
-    @Override
-    public final String getDescription() {
-        return this.implementation.getDescription(this.pointer.getPointerAddress());
-    }
+    String[] enumerateFiles(long pointer, String dir);
+
+    void loadLibraries(NativeResourceLoader loader);
+
+    PhysFsContainerImplementation getContainerImplementation();
+
+    PhysFsArchiveInfoImplementation getArchiveInfoImplementation();
 }

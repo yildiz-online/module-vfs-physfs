@@ -23,49 +23,47 @@
  *
  *
  */
-
-package jni;
+package be.yildizgames.module.vfs.physfs.internal.dummy;
 
 import be.yildizgames.common.libloader.NativeResourceLoader;
 import be.yildizgames.module.vfs.physfs.internal.PhysFsArchiveInfoImplementation;
 import be.yildizgames.module.vfs.physfs.internal.PhysFsContainerImplementation;
 import be.yildizgames.module.vfs.physfs.internal.PhysFsWrapperImplementation;
 
-/**
- * Interface to the JNI code.
- * @author Grégory van den Borre
- */
-public class PhysFsWrapperNative implements PhysFsWrapperImplementation {
-
-    private final PhysFsContainerImplementation containerImplementation = new PhysFsContainerNative();
-
-    private final PhysFsArchiveInfoImplementation archiveInfoImplementation = new PhysFsArchiveInfoNative();
+public class PhysFsWrapperDummy implements PhysFsWrapperImplementation {
 
     @Override
-    public native long initialize();
+    public long initialize() {
+        return 0;
+    }
 
     @Override
-    public native long registerContainer(long pointer, String path);
+    public long registerContainer(long pointer, String path) {
+        return 0;
+    }
 
     @Override
-    public native long[] getSupportedArchiveType(long pointer);
+    public long[] getSupportedArchiveType(long pointer) {
+        return new long[0];
+    }
 
     @Override
-    public native String[] enumerateFiles(long pointer, String dir);
+    public String[] enumerateFiles(long pointer, String dir) {
+        return new String[0];
+    }
 
     @Override
     public void loadLibraries(NativeResourceLoader loader) {
-        loader.loadBaseLibrary();
-        loader.loadLibrary("libyildizphysfs");
+        //Does nothing.
     }
 
     @Override
     public PhysFsContainerImplementation getContainerImplementation() {
-        return this.containerImplementation;
+        return new PhysFsContainerDummy();
     }
 
     @Override
     public PhysFsArchiveInfoImplementation getArchiveInfoImplementation() {
-        return this.archiveInfoImplementation;
+        return new PhysFsArchiveInfoDummy();
     }
 }

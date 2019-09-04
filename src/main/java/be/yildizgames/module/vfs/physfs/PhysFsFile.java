@@ -26,32 +26,48 @@
 
 package be.yildizgames.module.vfs.physfs;
 
+import be.yildizgames.common.jni.Native;
 import be.yildizgames.common.jni.NativePointer;
 import be.yildizgames.module.vfs.VfsFile;
-import jni.PhysFsFileNative;
+import be.yildizgames.module.vfs.physfs.internal.PhysFsFileImplementation;
+
+import java.util.Objects;
 
 /**
  * PhysFS implementation for a file.
  * @author Grégory Van den Borre
  */
-class PhysFsFile implements VfsFile {
+class PhysFsFile implements VfsFile, Native {
 
     /**
      * Pointer address of the native object.
      */
     private final NativePointer pointer;
 
+    private final PhysFsFileImplementation implementation;
+
     /**
      * Create a new instance.
      * @param pointer Pointer to the native object.
      */
-    PhysFsFile(final NativePointer pointer) {
+    PhysFsFile(final PhysFsFileImplementation implementation, final NativePointer pointer) {
         super();
-        this.pointer = pointer;
+        this.pointer = Objects.requireNonNull(pointer);
+        this.implementation = Objects.requireNonNull(implementation);
     }
 
     @Override
     public final long getSize() {
-        return PhysFsFileNative.getSize(this.pointer.getPointerAddress());
+        return this.implementation.getSize(this.pointer.getPointerAddress());
+    }
+
+    @Override
+    public NativePointer getPointer() {
+        return this.pointer;
+    }
+
+    @Override
+    public void delete() {
+        //FIXME implements
     }
 }

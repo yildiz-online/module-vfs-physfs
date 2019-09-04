@@ -23,21 +23,15 @@
  *
  *
  */
-
 package be.yildizgames.module.vfs.physfs;
 
-import be.yildizgames.common.libloader.NativeResourceLoader;
+import be.yildizgames.module.vfs.VfsEngine;
+import be.yildizgames.module.vfs.VfsEngineProvider;
 
-/**
- * @author Grégory Van den Borre
- */
-public class VfsFactory {
+public class PhysFsVfsEngineProvider implements VfsEngineProvider {
 
-    public static PhysFsWrapper getVfs(NativeResourceLoader loader) {
-        return PhysFsWrapper.create(loader);
-    }
-
-    public static PhysFsWrapper getVfs() {
-        return PhysFsWrapper.create();
+    @Override
+    public final VfsEngine getVfsEngine() {
+        return PhysFsVfsEngine.create();
     }
 }

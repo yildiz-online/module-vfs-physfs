@@ -23,49 +23,18 @@
  *
  *
  */
+package be.yildizgames.module.vfs.physfs.internal.dummy;
 
-package jni;
-
-import be.yildizgames.common.libloader.NativeResourceLoader;
 import be.yildizgames.module.vfs.physfs.internal.PhysFsArchiveInfoImplementation;
-import be.yildizgames.module.vfs.physfs.internal.PhysFsContainerImplementation;
-import be.yildizgames.module.vfs.physfs.internal.PhysFsWrapperImplementation;
 
-/**
- * Interface to the JNI code.
- * @author Grégory van den Borre
- */
-public class PhysFsWrapperNative implements PhysFsWrapperImplementation {
-
-    private final PhysFsContainerImplementation containerImplementation = new PhysFsContainerNative();
-
-    private final PhysFsArchiveInfoImplementation archiveInfoImplementation = new PhysFsArchiveInfoNative();
-
+public class PhysFsArchiveInfoDummy implements PhysFsArchiveInfoImplementation {
     @Override
-    public native long initialize();
-
-    @Override
-    public native long registerContainer(long pointer, String path);
-
-    @Override
-    public native long[] getSupportedArchiveType(long pointer);
-
-    @Override
-    public native String[] enumerateFiles(long pointer, String dir);
-
-    @Override
-    public void loadLibraries(NativeResourceLoader loader) {
-        loader.loadBaseLibrary();
-        loader.loadLibrary("libyildizphysfs");
+    public String getExtension(long pointer) {
+        return "";
     }
 
     @Override
-    public PhysFsContainerImplementation getContainerImplementation() {
-        return this.containerImplementation;
-    }
-
-    @Override
-    public PhysFsArchiveInfoImplementation getArchiveInfoImplementation() {
-        return this.archiveInfoImplementation;
+    public String getDescription(long pointer) {
+        return "";
     }
 }

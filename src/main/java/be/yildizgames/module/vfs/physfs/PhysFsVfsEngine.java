@@ -30,10 +30,16 @@ import be.yildizgames.common.jni.Native;
 import be.yildizgames.common.jni.NativePointer;
 import be.yildizgames.common.libloader.GlobalNativeResourceLoader;
 import be.yildizgames.common.libloader.NativeResourceLoader;
-import be.yildizgames.module.vfs.Vfs;
+import be.yildizgames.module.vfs.VfsEngine;
 import be.yildizgames.module.vfs.VfsArchiveInfo;
 import be.yildizgames.module.vfs.VfsContainer;
 import be.yildizgames.module.vfs.physfs.exception.VfsException;
+import be.yildizgames.module.vfs.physfs.internal.PhysFsArchiveInfoImplementation;
+import be.yildizgames.module.vfs.physfs.internal.PhysFsContainerImplementation;
+import be.yildizgames.module.vfs.physfs.internal.PhysFsImplementationFactory;
+import be.yildizgames.module.vfs.physfs.internal.PhysFsWrapperImplementation;
+import jni.PhysFsArchiveInfoNative;
+import jni.PhysFsContainerNative;
 import jni.PhysFsWrapperNative;
 
 import java.nio.file.Files;
@@ -47,7 +53,7 @@ import java.util.stream.Collectors;
  * PhysFs implementation for the VFS.
  * @author Grégory Van den Borre
  */
-public class PhysFsWrapper implements Vfs, Native {
+public class PhysFsVfsEngine implements VfsEngine, Native {
 
     /**
      * Pointer address of the native object.
@@ -55,16 +61,20 @@ public class PhysFsWrapper implements Vfs, Native {
     private final NativePointer pointer;
 
     /**
-     * Create a new instance, uncompress and load the native libs if necessary, and initialize the PhysFS library.
-     * @param loader Will unzip and  load the native libraries.
+     * Implementation to reach native code.
      */
-    private PhysFsWrapper(final NativeResourceLoader loader) {
+    private final PhysFsWrapperImplementation implementation = PhysFsImplementationFactory.getImplementation();
+
+    /**
+     * Create a new instance, uncompress and load the native libs if necessary, and initialize the PhysFS library.
+     * @param loader Will unzip and load the native libraries.
+     */
+    private PhysFsVfsEngine(final NativeResourceLoader loader) {
         super();
-        System.Logger logger = System.getLogger(PhysFsWrapper.class.getName());
+        System.Logger logger = System.getLogger(PhysFsVfsEngine.class.getName());
         logger.log(System.Logger.Level.INFO,"Initializing PhysFs virtual file system component...");
-        loader.loadBaseLibrary();
-        loader.loadLibrary("libyildizphysfs");
-        this.pointer = NativePointer.create(PhysFsWrapperNative.initialize());
+        this.implementation.loadLibraries(loader);
+        this.pointer = NativePointer.create(this.implementation.initialize());
         logger.log(System.Logger.Level.INFO,"Initializing PhysFs virtual file system component complete.");
     }
 
@@ -72,7 +82,7 @@ public class PhysFsWrapper implements Vfs, Native {
      * Create a new instance, the native resources will be loaded from the classpath jars.
      * @return The created instance.
      */
-    static PhysFsWrapper create() {
+    static PhysFsVfsEngine create() {
         return create(GlobalNativeResourceLoader.getInstance().getLoader());
     }
 
@@ -81,29 +91,28 @@ public class PhysFsWrapper implements Vfs, Native {
      * @param loader Loader to load the native resources.
      * @return The created instance.
      */
-    static PhysFsWrapper create(final NativeResourceLoader loader) {
-        return new PhysFsWrapper(loader);
+    static PhysFsVfsEngine create(final NativeResourceLoader loader) {
+        return new PhysFsVfsEngine(loader);
     }
 
     @Override
     public final VfsContainer registerContainer(final Path path) {
-        Objects.requireNonNull(path);
-        if(Files.notExists(path)) {
+        if(Files.notExists(Objects.requireNonNull(path))) {
             throw VfsException.containerNotExists(path);
         }
-        return new PhysFsContainer(path, NativePointer.create(PhysFsWrapperNative.registerContainer(this.pointer.getPointerAddress(), path.toString())));
+        return new PhysFsContainer(this.implementation.getContainerImplementation(), path, NativePointer.create(this.implementation.registerContainer(this.pointer.getPointerAddress(), path.toString())));
     }
 
     @Override
     public final List<VfsArchiveInfo> getSupportedArchiveInfo() {
-        return Arrays.stream(PhysFsWrapperNative.getSupportedArchiveType(this.pointer.getPointerAddress()))
+        return Arrays.stream(this.implementation.getSupportedArchiveType(this.pointer.getPointerAddress()))
                 .mapToObj(NativePointer::create)
-                .map(PhysFsArchiveInfo::new)
+                .map(p -> new PhysFsArchiveInfo(this.implementation.getArchiveInfoImplementation(), p))
                 .collect(Collectors.toList());
     }
 
     public final List<String> enumerateFiles(String dir) {
-        return Arrays.asList(PhysFsWrapperNative.enumerateFiles(this.pointer.getPointerAddress(), dir));
+        return Arrays.asList(this.implementation.enumerateFiles(this.pointer.getPointerAddress(), Objects.requireNonNull(dir)));
     }
 
     @Override
@@ -113,6 +122,6 @@ public class PhysFsWrapper implements Vfs, Native {
 
     @Override
     public void delete() {
-
+        //FIXME implements
     }
 }

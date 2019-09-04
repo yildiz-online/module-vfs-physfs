@@ -26,13 +26,13 @@
 
 package jni;
 
-public class PhysFsArchiveInfoNative {
+import be.yildizgames.module.vfs.physfs.internal.PhysFsArchiveInfoImplementation;
 
-    private PhysFsArchiveInfoNative() {
-        super();
-    }
+public class PhysFsArchiveInfoNative implements PhysFsArchiveInfoImplementation {
 
-    public static native String getExtension(long pointer);
+    @Override
+    public native String getExtension(long pointer);
 
-    public static native String getDescription(long pointer);
+    @Override
+    public native String getDescription(long pointer);
 }

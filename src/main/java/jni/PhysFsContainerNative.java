@@ -26,13 +26,21 @@
 
 package jni;
 
-public class PhysFsContainerNative {
+import be.yildizgames.module.vfs.physfs.internal.PhysFsContainerImplementation;
+import be.yildizgames.module.vfs.physfs.internal.PhysFsFileImplementation;
 
-    private PhysFsContainerNative() {
-        super();
+public class PhysFsContainerNative implements PhysFsContainerImplementation {
+
+    private final PhysFsFileImplementation fileImplentation = new PhysFsFileNative();
+
+    @Override
+    public native long openFile(long pointer, String name);
+
+    @Override
+    public native long reinit(long pointer);
+
+    @Override
+    public PhysFsFileImplementation getFileImplementation() {
+        return this.fileImplentation;
     }
-
-    public static native long openFile(long pointer, String name);
-
-    public static native long reinit(long pointer);
 }
