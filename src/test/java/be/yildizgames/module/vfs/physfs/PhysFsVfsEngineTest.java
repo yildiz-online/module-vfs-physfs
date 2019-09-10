@@ -29,15 +29,15 @@ import be.yildizgames.module.vfs.physfs.internal.TestEnabler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 
-public class PhysFsVfsEngineTest {
+class PhysFsVfsEngineTest {
 
     @BeforeEach
-    public void init() {
+    void init() {
         TestEnabler.enableTestImplementation();
     }
 
     @Nested
-    public class Constructor {
+    class Constructor {
 
 
 

@@ -25,7 +25,7 @@ import be.yildizgames.module.vfs.physfs.PhysFsVfsEngineProvider;
  *
  *
  */
-module be.yildizgames.module.vfs.physfs {
+open module be.yildizgames.module.vfs.physfs {
 
     requires be.yildizgames.common.jni;
     requires be.yildizgames.common.libloader;

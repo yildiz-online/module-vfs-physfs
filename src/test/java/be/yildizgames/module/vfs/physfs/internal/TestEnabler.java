@@ -25,8 +25,6 @@
  */
 package be.yildizgames.module.vfs.physfs.internal;
 
-import be.yildizgames.module.vfs.physfs.internal.PhysFsImplementationFactory;
-
 public class TestEnabler {
 
     public static void enableTestImplementation() {
