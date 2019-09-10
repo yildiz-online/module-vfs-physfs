@@ -34,13 +34,8 @@ import be.yildizgames.module.vfs.VfsEngine;
 import be.yildizgames.module.vfs.VfsArchiveInfo;
 import be.yildizgames.module.vfs.VfsContainer;
 import be.yildizgames.module.vfs.physfs.exception.VfsException;
-import be.yildizgames.module.vfs.physfs.internal.PhysFsArchiveInfoImplementation;
-import be.yildizgames.module.vfs.physfs.internal.PhysFsContainerImplementation;
 import be.yildizgames.module.vfs.physfs.internal.PhysFsImplementationFactory;
 import be.yildizgames.module.vfs.physfs.internal.PhysFsWrapperImplementation;
-import jni.PhysFsArchiveInfoNative;
-import jni.PhysFsContainerNative;
-import jni.PhysFsWrapperNative;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
