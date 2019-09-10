@@ -31,18 +31,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-public class PhysFsVfsEngineProviderTest {
+class PhysFsVfsEngineProviderTest {
 
     @BeforeEach
-    public void init() {
+    void init() {
         TestEnabler.enableTestImplementation();
     }
 
     @Nested
-    public class GetVfsEngine {
+    class GetVfsEngine {
 
         @Test
-        public void happyFlow() {
+        void happyFlow() {
             PhysFsVfsEngineProvider provider = new PhysFsVfsEngineProvider();
             Assertions.assertNotNull(provider.getVfsEngine());
         }
